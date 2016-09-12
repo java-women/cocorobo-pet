@@ -11,12 +11,12 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
-jar {
+war {
 	baseName = 'cocorobo-pet'
-	version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
