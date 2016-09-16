@@ -9,4 +9,4 @@
     - 画像判定処理
     - 動作API@cocorobo
 - cocoroboデータ取得API
-    -　感情取得API
+    - 感情取得API
