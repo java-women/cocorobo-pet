@@ -13,7 +13,9 @@ public class MoveCocoroboController{
     /**
      * 画像を受け取って、人の位置を判定し、ココロボが進む方向を決定する
      *
-     * @param
+     * @param apiKey(String)
+     *        画像url?(String)
+     *
      * @return apiKey(String)
      *         mode(String)
      * modeの種類
@@ -25,7 +27,7 @@ public class MoveCocoroboController{
      *
      */
 
-    getMovemontDirection(String apiKey){
+    getMovemontDirection(String apiKey, String url){
         /*画像から方向を決める処理を書く*/
 
         /*モックデータ*/
