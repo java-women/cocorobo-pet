@@ -26,7 +26,7 @@ public class WebcamScheduledTasks {
 
 	/**
 	 * 定期的にWebカメラ情報をココロボWebカメラ情報送信APIに送信.
-	 * <p>
+	 *
 	 * TODO initialDelayとfixedRateを外部化
 	 *
 	 * @throws IOException
