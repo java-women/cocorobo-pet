@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/feel_image"
-        android:src="@drawable/eye_sample1"
+        android:src="@drawable/normal"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="false"

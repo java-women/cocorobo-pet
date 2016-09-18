@@ -79,29 +79,29 @@ public class FeelActivity extends AppCompatActivity {
     }
 
     public void setFeelImage(String feel) {
-        int imageName = R.drawable.eye_sample1;
+        int imageName = R.drawable.normal;
 
         switch (feel) {
             case NORMAL:
-                imageName = R.drawable.eye_sample1;
+                imageName = R.drawable.normal;
                 break;
             case WAAI:
-                imageName = R.drawable.eye_sample2;
+                imageName = R.drawable.waai;
                 break;
             case MATTEE:
-                imageName = R.drawable.eye_sample3;
+                imageName = R.drawable.mattee;
                 break;
             case SHOBOON:
-                imageName = R.drawable.eye_sample4;
+                imageName = R.drawable.shoboon;
                 break;
             case KIRAAN:
-                imageName = R.drawable.eye_sample5;
+                imageName = R.drawable.kiraan;
                 break;
             case SUKII:
-                imageName = R.drawable.eye_sample2;
+                imageName = R.drawable.sukii;
                 break;
             case MUKII:
-                imageName = R.drawable.eye_sample3;
+                imageName = R.drawable.mukii;
                 break;
         }
 
