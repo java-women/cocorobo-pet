@@ -32,7 +32,6 @@ configurations {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
@@ -40,4 +39,8 @@ dependencies {
 javadoc {
     options.charSet = 'UTF-8'
     options.encoding = 'UTF-8'
+}
+
+bootRepackage {
+    mainClass = 'javajo.Application'
 }

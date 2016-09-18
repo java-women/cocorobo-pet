@@ -1,13 +1,10 @@
 package javajo.task;
 
-import com.github.sarxos.webcam.Webcam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,7 +16,7 @@ public class WebcamScheduledTasks {
 
 	private final Logger log = LoggerFactory.getLogger(WebcamScheduledTasks.class);
 
-	private final File filePath = new File(System.getProperty("java.io.tmpdir") + "cocorobo");
+	private final File filePath = new File(System.getProperty("java.io.tmpdir") + "/cocorobo");
 
 	// TODO ココロボの種別(とりあえず固定値)
 	private final String cocorobo = "toko";
@@ -33,57 +30,34 @@ public class WebcamScheduledTasks {
 	 */
 	@Scheduled(initialDelay = 10000, fixedRate = 5000)
 	public void sendWebcamCapture() throws IOException {
-		File file = null;
+		if (createTempDir()) {
+			File file = new File(filePath, String.format("cocorobo-capture_%s_%s.jpg", cocorobo, System.currentTimeMillis()));
 
-		try {
-			Webcam webcam = getWebcamInstance();
+			ProcessBuilder pb = new ProcessBuilder("fswebcam", "--no-timestamp", "--no-banner", file.getPath());
+			Process p = null;
 
-			// Webカメラオープン
-			webcam.open();
-
-			// イメージ取得
-			BufferedImage image = webcam.getImage();
-
-			// イメージ保存
-			if (createTempDir()) {
-				file = new File(filePath, String.format("cocorobo-capture_%s_%s.jpg", cocorobo, System.currentTimeMillis()));
-				ImageIO.write(image, "jpeg", file);
+			try {
+				// キャプチャを取得
+				p = pb.start();
+				p.waitFor();
 				log.debug("Capture : {}", file.toPath());
 
 				// TODO サーバにイメージを送る
 
-			} else {
-				log.warn("Failed: Unable to create temporary directory : {}", filePath);
+			} catch (IOException | InterruptedException e) {
+				log.error("Failed to take the capture.", e);
+
+			} finally {
+				// イメージ削除
+				deleteFile(file);
+
+				// プロセス破棄
+				if (p != null) {
+					p.destroy();
+				}
+
 			}
-
-		} finally {
-			// イメージ削除
-			deleteFile(file);
 		}
-	}
-
-	/**
-	 * Webカメラのインスタンスを取得.
-	 * <p>
-	 * TODO 複数のWebカメラが接続されている場合はこのメソッドを修正
-	 *
-	 * @return Webcamインスタンス
-	 */
-	private Webcam getWebcamInstance() {
-		Webcam webcam = null;
-
-		// Webカメラ取得
-		webcam = Webcam.getDefault();
-
-		if (webcam != null) {
-			log.debug("Webcam : {}", webcam.getName());
-
-		} else {
-			log.warn("Failed: Webcam Not Found Error");
-			throw new NullPointerException("Failed: Webcam Not Found Error");
-		}
-
-		return webcam;
 	}
 
 	/**
