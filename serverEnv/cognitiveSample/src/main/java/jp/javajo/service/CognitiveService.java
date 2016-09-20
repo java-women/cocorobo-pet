@@ -22,7 +22,7 @@ public class CognitiveService {
     private static final Logger logger = LoggerFactory.getLogger(CognitiveService.class);
 
     //Face API
-    private final String apiKey = "e27abe9045254dc0b94f3e8a8899d999";
+    private final String apiKey = "yourAPIkey";
     private final String verifyUrl = "https://api.projectoxford.ai/face/v1.0/verify";
     private final String detectUrl = "https://api.projectoxford.ai/face/v1.0/detect";
 
