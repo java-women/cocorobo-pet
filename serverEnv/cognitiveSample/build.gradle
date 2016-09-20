@@ -44,7 +44,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.3.5.RELEASE'
 
-    providedCompile 'org.projectlombok:lombok:1.16.8'
+    compile 'org.projectlombok:lombok:1.16.8'
 
     testCompile 'junit:junit:4.11'
     testCompile 'org.springframework:spring-test:2.5'
