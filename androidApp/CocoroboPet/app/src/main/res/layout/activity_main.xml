@@ -15,7 +15,15 @@
         android:text="@string/photo"
         android:id="@+id/photo"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_orange_light"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="60dp"
+        android:textColor="@android:color/white"
+        android:width="150dp"
+        android:height="55dp"
+        android:textStyle="bold"
+        android:textSize="15dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -23,5 +31,28 @@
         android:text="@string/feel"
         android:id="@+id/feel"
         android:layout_below="@+id/photo"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#ff75c1"
+        android:textColor="@android:color/white"
+        android:width="150dp"
+        android:height="55dp"
+        android:textStyle="bold"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:minHeight="150dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="174dp"
+            android:layout_height="205dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/javajo"
+            android:layout_weight="0.04" />
+    </LinearLayout>
 </RelativeLayout>
