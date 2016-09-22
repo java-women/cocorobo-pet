@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -45,23 +43,15 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
         context = PhotoActivity.this;
 
         //さつえいボタン。カメラを起動する。
-        Button cameraButton = (Button) findViewById(R.id.camera);
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //カメラ起動
-                //戻り値をstartActivityForResultへ
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, RESULT_CAMERA);
+        findViewById(R.id.camera).setOnClickListener(view ->
+            //カメラ起動
+            //戻り値をstartActivityForResultへ
+            startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), RESULT_CAMERA)
 
-            }
-        });
+        );
 
         //送信ボタン。撮影後の画像を送信する
-        Button photoSendButton = (Button) findViewById(R.id.photoSend);
-        photoSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        findViewById(R.id.photoSend).setOnClickListener(view -> {
 
                 String ownerName = ownerNameText.getText().toString();     // 入力文字の取得
                  //かいぬし名未入力check
@@ -75,7 +65,7 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
 
                 //Http送信クラス
                 HttpPostTask task = new HttpPostTask(context);
-
+                //あとでここ書き足しますうううう
                 task.addURL("http://...");
 
                 //Http送信クラスに飼い主名を設定
@@ -95,7 +85,6 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
 
                 //実行（非同期処理）
                 task.execute();
-            }
 
         });
 
