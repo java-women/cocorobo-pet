@@ -1,17 +1,14 @@
 package javajo;
 
-import javajo.dto.DetecctRequest;
-import javajo.dto.DetecctResponse;
+import javajo.dto.DetectRequest;
+import javajo.dto.DetectResponse;
 import javajo.dto.PhotoUrl;
 import javajo.dto.RequestBody;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,36 +26,38 @@ public class RegistrationFaceController {
     /**
      * 画像を登録する
      *
-     * @param 登録する画像のURL
+     * @param 登録する写真のurl
+     *
      *
      * @return 登録情報JSON
      */
 
     @GetMapping(value = "/photo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public DetectResponse getFeel(String url) {
+    public DetectResponse registerFace(String url) {
 
-        log.debug("REST request to get Feel : {}", cocorobo);
+        log.debug("REST request to register Face : {}");
 
         //リクエストの作成
         PhotoUrl photoUrl = new PhotoUrl();
         RequestBody body = new RequestBody();
-        body.setPhotoUrl(photoUrl.setPhotoUrl(url));
+        photoUrl.setPhotoUrl(url);
+        body.setPhotoUrl(photoUrl);
 
         HttpHeaders headers = createHttpHeaders();
 
 
-        DetectRequests requests = new DetectRequests(body, headers);
+        DetectRequest requests = new DetectRequest(body, headers);
 
-        return new DetectResponse(detectUrl,requests);
+        return new DetectResponse();
     }
 
 
     private HttpHeaders createHttpHeaders() {
-        Apikey apiKey = new ApiKey();
+        ApiKey apiKey = new ApiKey();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", MediaType.APPLICATION_JSON.toString());
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-        headers.add("Ocp-Apim-Subscription-Key", apiKey.getApiKey);
+        headers.add("Ocp-Apim-Subscription-Key", apiKey.getApiKey());
 
         return headers;
     }

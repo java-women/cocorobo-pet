@@ -1,6 +1,6 @@
 package javajo;
 
-public class ApiKeyClass{
+public class ApiKey {
     private final String apiKey = "";
 
     public String getApiKey() {

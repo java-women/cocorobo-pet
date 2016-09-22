@@ -1,13 +1,13 @@
 package javajo.dto;
 
 public class PhotoUrl{
-    private Strng photoUrl;
+    private String photoUrl;
 
-    public void setPhotoUrl(Strng photoUrl) {
+    public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
 
-    public Strng getPhotoUrl() {
+    public String getPhotoUrl() {
         return photoUrl;
     }
 }

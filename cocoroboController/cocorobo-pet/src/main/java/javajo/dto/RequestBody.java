@@ -1,5 +1,7 @@
 package javajo.dto;
- public class RequestsBody{
+
+ public class RequestBody {
+
      private PhotoUrl photoUrl;
 
      public void setPhotoUrl(PhotoUrl photoUrl) {
