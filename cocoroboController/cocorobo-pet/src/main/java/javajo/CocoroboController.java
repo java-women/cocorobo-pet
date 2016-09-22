@@ -36,11 +36,13 @@ public class CocoroboController {
      * }</pre>
      * <p>feelの詳細</p>
      * <ul>
+     *     <li>normal：普通の顔</li>
      *     <li>mattee：待って〜！って顔</li>
      *     <li>shoboon：置いてかれた、しょぼーん</li>
      *     <li>waai：喜び</li>
-     *     <li>dere：デレデレ</li>
-     *     <li>tun：ツン</li>
+     *     <li>mukii：ムキーッ！</li>
+     *     <li>kiraan：キラーン</li>
+     *     <li>sukii：目がハート</li>
      * </ul>
      */
     @GetMapping(value = "/feels/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,7 +50,7 @@ public class CocoroboController {
         log.debug("REST request to get Feel : {}", cocorobo);
 
         /* モックデータ作成開始 */
-        List<String> feel = Arrays.asList("mattee", "shoboon", "waai", "dere", "tun");
+        List<String> feel = Arrays.asList("normal", "mattee", "shoboon", "waai", "mukii", "kiraan", "sukii");
         Collections.shuffle(feel);
 
         FeelDTO feelDTO = new FeelDTO();
