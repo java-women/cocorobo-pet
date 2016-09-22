@@ -1,5 +1,6 @@
 package javajo.task;
 
+import javajo.config.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -30,6 +31,12 @@ public class WebcamScheduledTasks {
 	 */
 	@Scheduled(initialDelay = 10000, fixedRate = 5000)
 	public void sendWebcamCapture() throws IOException {
+		// ペットモードでない場合は写真を撮らない
+		if (!Constants.isPetMode()) {
+			log.debug("Not pet mode.");
+			return;
+		}
+
 		if (createTempDir()) {
 			File file = new File(filePath, String.format("cocorobo-capture_%s_%s.jpg", cocorobo, System.currentTimeMillis()));
 
