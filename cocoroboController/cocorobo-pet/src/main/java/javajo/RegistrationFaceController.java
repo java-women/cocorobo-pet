@@ -1,6 +1,10 @@
 package javajo;
 
 import javajo.dto.DetecctRequest;
+import javajo.dto.DetecctResponse;
+import javajo.dto.PhotoUrl;
+import javajo.dto.RequestBody;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,9 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 画像を登録する
