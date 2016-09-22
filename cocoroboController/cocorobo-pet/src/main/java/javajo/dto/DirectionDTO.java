@@ -5,19 +5,11 @@ package javajo.dto;
  */
 public class DirectionDTO {
 
-    // apikey
-    private String apiKey;
 
     //進行方向
     private String direction;
 
-    public String getApiKey(){
-        return apiKey;
-    }
 
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
 
     public String getDirection() {
         return direction;
