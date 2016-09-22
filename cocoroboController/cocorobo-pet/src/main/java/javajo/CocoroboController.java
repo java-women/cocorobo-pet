@@ -36,6 +36,7 @@ public class CocoroboController {
      * }</pre>
      * <p>feelの詳細</p>
      * <ul>
+     *     <li>normal：普通の顔</li>
      *     <li>mattee：待って〜！って顔</li>
      *     <li>shoboon：置いてかれた、しょぼーん</li>
      *     <li>waai：喜び</li>
@@ -49,7 +50,7 @@ public class CocoroboController {
         log.debug("REST request to get Feel : {}", cocorobo);
 
         /* モックデータ作成開始 */
-        List<String> feel = Arrays.asList("mattee", "shoboon", "waai", "mukii", "kiraan", "sukii");
+        List<String> feel = Arrays.asList("normal", "mattee", "shoboon", "waai", "mukii", "kiraan", "sukii");
         Collections.shuffle(feel);
 
         FeelDTO feelDTO = new FeelDTO();
