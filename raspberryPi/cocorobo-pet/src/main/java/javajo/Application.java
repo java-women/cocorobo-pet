@@ -1,7 +1,9 @@
 package javajo;
 
+import javajo.controller.PetController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
@@ -9,6 +11,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		ApplicationContext ctx = SpringApplication.run(Application.class, args);
+
+		// 起動時にペットモードを開始する
+		PetController controller = ctx.getBean(PetController.class);
+		controller.startPetMode();
 	}
 }

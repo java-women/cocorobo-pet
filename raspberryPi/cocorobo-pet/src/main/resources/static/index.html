@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>Top</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script>
+		$(function() {
+			$('button#start').on('click', function() {
+				$.ajax({
+					type:"put",
+					url:"http://localhost:8080/api/pet-mode/start",
+					dataType: "json",
+					success : function(data, status, xhr) {
+						// TODO 成功処理 なぜか呼ばれないのでサーバのログを確認する
+					},
+					error : function(XMLHttpRequest, status, errorThrown) {
+						// TODO エラー処理 なぜか呼ばれないのでサーバのログを確認する
+					}
+				});
+			});
+
+			$('button#end').on('click', function() {
+				$.ajax({
+					type:"put",
+					url:"http://localhost:8080/api/pet-mode/end",
+					dataType: "json",
+					success : function(data, status, xhr) {
+						// TODO 成功処理 なぜか呼ばれないのでサーバのログを確認する
+					},
+					error : function(XMLHttpRequest, status, errorThrown) {
+						// TODO エラー処理 なぜか呼ばれないのでサーバのログを確認する
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<button id="start">開始</button>
+	<button id="end">終了</button>
+</body>
+</html>
