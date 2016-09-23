@@ -10,9 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * Created by ohashi on 2016/09/23.
- */
+
 public class FaceAuthentication {
 
     private final Logger log = LoggerFactory.getLogger(FaceAuthentication.class);
@@ -24,7 +22,7 @@ public class FaceAuthentication {
      *@return APIの実行結果JSON
      * {
             "isIdentical":boolean,
-            "confidence":Number?
+            "confidence":double
         }
      **/
 
