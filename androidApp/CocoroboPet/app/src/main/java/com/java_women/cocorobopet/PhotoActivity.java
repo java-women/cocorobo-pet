@@ -69,7 +69,7 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                 task.addURL("http://...");
 
                 //Http送信クラスに飼い主名を設定
-                task.addText("owner", ownerName);
+                task.addText("userId", ownerName);
 
                 //ImageView画像をbmp→byteに変換
                 Bitmap bmp = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
@@ -79,7 +79,7 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                 //PNG, クオリティー100としてbyte配列にデータを格納
                 byte[] bytes=  byteArrayOutputStream.toByteArray();
                 //Http送信クラスに画像を設定
-                task.addImage("ownerFace" + ".png", bytes);
+                task.addImage("faceImage", bytes);
                 // リスナーをセットする
                 task.setListener(PhotoActivity.this);
 
