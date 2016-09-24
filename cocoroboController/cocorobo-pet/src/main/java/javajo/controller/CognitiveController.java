@@ -1,6 +1,7 @@
 package javajo.controller;
 
 import javajo.dto.CompareImageDTO;
+import javajo.dto.RegisterImgDTO;
 import javajo.enums.StatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,33 @@ public class CognitiveController {
 
     private final Logger log = LoggerFactory.getLogger(CognitiveController.class);
 
+    /**
+     * Androidから画像を受け取り結果を返す.
+     *
+     * @param userId  userId
+     * @param faceImg 画像
+     * @return JSON形式の文字列：<pre>{@code
+     * {
+     *     "result": 結果,
+     *     "faceId": 顔ID
+     * }
+     * }</pre>
+     */
+    @PostMapping(value = "/registerImage", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity registerImage(@RequestParam("userId") String userId, @RequestParam("faceImage") MultipartFile faceImg) {
+        log.info("REST request registerImg : {}, faceImg : {}", userId, faceImg);
+
+        /* モックデータ作成開始 */
+        RegisterImgDTO registerImgDTO = new RegisterImgDTO();
+        registerImgDTO.setResult(StatusEnum.OK.getName());
+        registerImgDTO.setFaceId("aaaaaaaaaaaaaa");
+        /* モックデータ作成終了 */
+
+        return new ResponseEntity(registerImgDTO, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/compareImage", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompareImageDTO> compareImage(@RequestParam("upload_file") MultipartFile multipartFile) {
+    public ResponseEntity<CompareImageDTO> compareImage(@RequestParam("compareFile") MultipartFile multipartFile) {
 
         CompareImageDTO results = new CompareImageDTO();
 
@@ -37,6 +63,5 @@ public class CognitiveController {
 
         return new ResponseEntity(results, HttpStatus.OK);
     }
-
 
 }

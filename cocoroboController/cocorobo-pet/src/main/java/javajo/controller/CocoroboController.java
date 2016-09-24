@@ -1,7 +1,10 @@
 package javajo.controller;
 
 import javajo.dto.FeelDTO;
+import javajo.dto.MoveDTO;
 import javajo.dto.SpeechDTO;
+import javajo.enums.StatusEnum;
+import javajo.model.verify.Verify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -83,6 +86,29 @@ public class CocoroboController {
         /* モックデータ作成終了 */
 
         return new ResponseEntity(new SpeechDTO(), HttpStatus.OK);
+    }
+
+    /**
+     * Cocoroboを動作させる.
+     *
+     * @param cocorobo COCOROBOの識別子：例)toko
+     * @param verify Verify
+     * @return JSON形式の文字列
+     */
+    @PostMapping(value = "/moves/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MoveDTO> move(@PathVariable String cocorobo, Verify verify) {
+        log.info("REST request to move. cocorobo : {}, verify : {}",cocorobo, verify);
+
+        // TODO 方向計算
+
+        // TODO COCOROBOの動作APIを呼び出す
+
+        /* モックデータ作成開始 */
+        MoveDTO moveDTO = new MoveDTO();
+        moveDTO.setResult(StatusEnum.OK.getName());
+        /* モックデータ作成終了 */
+
+        return new ResponseEntity(new MoveDTO(), HttpStatus.OK);
     }
 
 }
