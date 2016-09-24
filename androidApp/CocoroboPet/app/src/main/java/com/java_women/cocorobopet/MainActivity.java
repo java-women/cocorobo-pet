@@ -20,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void clickFeelButton() {
         Button feelButton = (Button) findViewById(R.id.feel);
-        assert feelButton != null;
-        feelButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, FeelActivity.class)));
+        if (feelButton != null) {
+            feelButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, FeelActivity.class)));
+        }
     }
 
 }
