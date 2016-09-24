@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.java_women.cocorobopet.com.java_women.cocorobopet.http.HttpPostListener;
-import com.java_women.cocorobopet.com.java_women.cocorobopet.http.HttpPostTask;
+import com.java_women.cocorobopet.network.HttpPostListener;
+import com.java_women.cocorobopet.network.HttpPostTask;
 
 import java.io.ByteArrayOutputStream;
 
@@ -65,7 +65,7 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
 
                 //Http送信クラス
                 HttpPostTask task = new HttpPostTask(context);
-                //あとでここ書き足しますうううう
+                //URL
                 task.addURL("http://...");
 
                 //Http送信クラスに飼い主名を設定
@@ -79,7 +79,7 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                 //PNG, クオリティー100としてbyte配列にデータを格納
                 byte[] bytes=  byteArrayOutputStream.toByteArray();
                 //Http送信クラスに画像を設定
-                task.addImage("faceImage", bytes);
+                task.addImage("faceImg", bytes);
                 // リスナーをセットする
                 task.setListener(PhotoActivity.this);
 
@@ -107,10 +107,12 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
     public void postCompletion(byte[] response) {
         Log.i(TAG, "post completion!");
         Log.i(TAG, new String(response));
+        Toast.makeText(context, "送信に成功しました", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void postFailure() {
         Log.i(TAG, "post failure!");
+        Toast.makeText(context, "送信に失敗しました", Toast.LENGTH_LONG).show();
     }
 }
