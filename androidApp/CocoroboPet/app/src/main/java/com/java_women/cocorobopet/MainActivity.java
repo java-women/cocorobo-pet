@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.photo).setOnClickListener(view ->
-                startActivity(new Intent(MainActivity.this,PhotoActivity.class))
+                startActivity(new Intent(MainActivity.this, PhotoActivity.class))
         );
 
         clickFeelButton();
@@ -28,4 +28,5 @@ public class MainActivity extends AppCompatActivity {
             feelButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, FeelActivity.class)));
         }
 
+    }
 }

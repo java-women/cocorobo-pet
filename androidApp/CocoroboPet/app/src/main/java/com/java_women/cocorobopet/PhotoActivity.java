@@ -79,7 +79,7 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                 //JPEG, クオリティー100としてbyte配列にデータを格納
                 byte[] bytes=  byteArrayOutputStream.toByteArray();
                 //Http送信クラスに画像を設定
-                task.addImage("faceImg", bytes);
+                task.addImage("faceImage", bytes);
                 // リスナーをセットする
                 task.setListener(PhotoActivity.this);
 

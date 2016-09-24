@@ -159,12 +159,11 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
             }
 
             // 画像の設定
-            int count = 1;
             for (Entry<String, byte[]> entry: mImages.entrySet())
             {
                 String key = entry.getKey();
                 byte[] data = entry.getValue();
-                String name = "upload_file" + count++;
+                String name = "faceImage";
 
                 baos.write(("--" + BOUNDARY + "\r\n").getBytes());
                 baos.write(("Content-Disposition: form-data;").getBytes());
