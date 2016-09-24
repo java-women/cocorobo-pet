@@ -1,4 +1,4 @@
-package com.java_women.cocorobopet.com.java_women.cocorobopet.http;
+package com.java_women.cocorobopet.network;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -129,13 +129,7 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
         } finally {
             try {
                 is.close();
-            } catch (Exception e) {}
-
-            try {
                 connection.disconnect();
-            } catch (Exception e) {}
-
-            try {
                 baos.close();
             } catch (Exception e) {}
         }
@@ -200,13 +194,7 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
      */
     @Override
     protected byte[] doInBackground(Void... params) {
-        //↓テスト用コード↓
-        try {
-            //テスト用コード
-            Thread.sleep(2000); //2000ミリ秒Sleepする
-        } catch (InterruptedException e) {
-        }
-        //↑テスト用コード↑
+
         // POSTするデータを作成する。
         byte[] data = makePostData();
         //送信処理
