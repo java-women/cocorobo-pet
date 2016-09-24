@@ -24,9 +24,7 @@ public class CognitiveController {
     private final Logger log = LoggerFactory.getLogger(CognitiveController.class);
 
     @PostMapping(value = "/compareImage", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompareImageDTO> compareImage(
-            @RequestParam("upload_file") MultipartFile multipartFile,
-            @RequestParam("filetype") String fileType) {
+    public ResponseEntity<CompareImageDTO> compareImage(@RequestParam("upload_file") MultipartFile multipartFile) {
 
         CompareImageDTO results = new CompareImageDTO();
 
