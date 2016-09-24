@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
-
+/**
+ * menu画面.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,5 @@ public class MainActivity extends AppCompatActivity {
         if (feelButton != null) {
             feelButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, FeelActivity.class)));
         }
-
-    }
 
 }
