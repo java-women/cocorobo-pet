@@ -19,15 +19,15 @@ import java.io.ByteArrayOutputStream;
 
 
 /**
- * 飼い主の写真を撮影する
+ * 飼い主の写真を撮影送信
  */
 public class PhotoActivity extends AppCompatActivity implements HttpPostListener {
 
     final static private String TAG = "HttpPost";
     private final static int RESULT_CAMERA = 1001;
+    public Context context = null;
     private ImageView imageView;
     private EditText ownerNameText;
-    public Context context = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +74,9 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                 //ImageView画像をbmp→byteに変換
                 Bitmap bmp = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
 
-                //PNG, クオリティー100としてbyte配列にデータを格納
+                //JPEG, クオリティー100としてbyte配列にデータを格納
                 byte[] bytes=  byteArrayOutputStream.toByteArray();
                 //Http送信クラスに画像を設定
                 task.addImage("faceImg", bytes);
@@ -98,7 +98,6 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                 //画像を取得する
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 imageView.setImageBitmap(bitmap);
-
            }
         }
     }
