@@ -1,7 +1,6 @@
 package javajo.controller;
 
 import javajo.dto.CompareImageDTO;
-import javajo.dto.SpeechDTO;
 import javajo.enums.StatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
