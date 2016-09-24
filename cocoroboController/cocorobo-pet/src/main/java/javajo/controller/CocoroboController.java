@@ -67,7 +67,7 @@ public class CocoroboController {
      * 指定されたCOCOROBOに指定した文字列で音声発話させる.
      *
      * @param cocorobo COCOROBOの識別子：例)toko
-     * @param message
+     * @param requestSpeechDTO API Keyとメッセージ
      * @return JSON形式の文字列(COCOROBO音声発話APIのレスポンス)：<pre>{@code
      * {
      *     "resultCode": 結果コード,
@@ -77,23 +77,19 @@ public class CocoroboController {
      * }
      * }</pre>
      */
-    @PostMapping(value = "/speeches/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SpeechDTO> speech(@PathVariable String cocorobo, @RequestBody String message, @RequestBody String apikey_cocorobo) {
-        log.info("REST request speech : {}, message : {}, apikey_cocorobo : {}",cocorobo, message, apikey_cocorobo);
-        return new ResponseEntity(sentMessageForCocorobo(message), HttpStatus.OK);
+    @PostMapping(value = "/speeches/{cocorobo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<SpeechDTO> speech(@PathVariable String cocorobo, @RequestBody RequestSpeechDTO requestSpeechDTO) {
+        log.info("REST request speech : {}, requestSpeechDTO : {}", cocorobo, requestSpeechDTO);
+        return new ResponseEntity(sentMessageForCocorobo(requestSpeechDTO), HttpStatus.OK);
     }
 
     /**
      * COCOROBOに発話させる.
      *
-     * @param message COCOROBOに発話させるメッセージ
+     * @param requestSpeechDTO COCOROBOに発話させるメッセージが入っているDTO
      * @return SpeechDTO
      */
-    private SpeechDTO sentMessageForCocorobo(String message) {
-        // request bodyの作成
-        RequestSpeechDTO requestSpeechDTO = new RequestSpeechDTO();
-        requestSpeechDTO.setMessage(message);
-
+    private String sentMessageForCocorobo(RequestSpeechDTO requestSpeechDTO) {
         //HttpHeaderの作成
         HttpHeaders headers = createHttpHeaders();
 
@@ -102,7 +98,7 @@ public class CocoroboController {
 
         // CocoroboApiの発話APIを実行.
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForObject(SPEECH_URL, request, SpeechDTO.class);
+        return restTemplate.postForObject(SPEECH_URL, request, String.class);
     }
 
     /**
@@ -112,8 +108,7 @@ public class CocoroboController {
      */
     private HttpHeaders createHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", MediaType.APPLICATION_JSON.toString());
-        headers.add("Accept", MediaType.APPLICATION_JSON.toString());
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_UTF8.toString());
 
         return headers;
     }
