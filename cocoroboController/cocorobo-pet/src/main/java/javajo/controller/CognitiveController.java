@@ -1,7 +1,7 @@
 package javajo.controller;
 
 import javajo.dto.CompareImageDTO;
-import javajo.dto.SpeechDTO;
+import javajo.dto.RegisterImgDTO;
 import javajo.enums.StatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import javajo.dto.CompareImageDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 
 /**
  * MS Azure CognitiveAPIとやりとりをするAPI.
