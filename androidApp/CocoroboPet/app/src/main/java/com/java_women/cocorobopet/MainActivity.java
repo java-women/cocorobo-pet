@@ -3,7 +3,8 @@ package com.java_women.cocorobopet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.widget.Button;
+
 
 public class MainActivity extends AppCompatActivity {
 
