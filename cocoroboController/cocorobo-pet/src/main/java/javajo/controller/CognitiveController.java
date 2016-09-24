@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import javajo.dto.CompareImageDTO;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  * MS Azure CognitiveAPIとやりとりをするAPI.
@@ -22,6 +29,31 @@ import org.springframework.web.multipart.MultipartFile;
 public class CognitiveController {
 
     private final Logger log = LoggerFactory.getLogger(CognitiveController.class);
+
+    /**
+     * Androidから画像を受け取り結果を返す.
+     *
+     * @param userId  userId
+     * @param faceImg 画像
+     * @return JSON形式の文字列：<pre>{@code
+     * {
+     *     "result": 結果,
+     *     "faceId": 顔ID
+     * }
+     * }</pre>
+     */
+    @PostMapping(value = "/registerImg", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RegisterImgDTO> registerImg(@RequestParam("userId") String userId, @RequestParam("faceImg") MultipartFile faceImg) {
+        log.info("REST request registerImg : {}, faceImg : {}", userId, faceImg);
+
+        /* モックデータ作成開始 */
+        RegisterImgDTO registerImgDTO = new RegisterImgDTO();
+        registerImgDTO.setResult(StatusEnum.OK.getName());
+        registerImgDTO.setFaceId("aaaaaaaaaaaaaa");
+        /* モックデータ作成終了 */
+
+        return new ResponseEntity(registerImgDTO, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/compareImage", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CompareImageDTO> compareImage(@RequestParam("upload_file") MultipartFile multipartFile) {
@@ -38,6 +70,5 @@ public class CognitiveController {
 
         return new ResponseEntity(results, HttpStatus.OK);
     }
-
 
 }
