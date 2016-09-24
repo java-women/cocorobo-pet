@@ -1,10 +1,8 @@
 package javajo.dto;
 
+
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Created by ohashi on 2016/09/23.
- */
 public class RequestVerify {
     private String faceId1;
     private MultipartFile photo;
@@ -16,4 +14,5 @@ public class RequestVerify {
     public void setPhoto(MultipartFile photo) {
         this.photo = photo;
     }
+
 }
