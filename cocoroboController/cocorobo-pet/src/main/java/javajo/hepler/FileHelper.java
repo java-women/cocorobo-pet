@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * ファイル操作
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class FileHelper {
 
     private File uploadDirectory;
-    private static final String NAME = "masterUser.jpg";
+    private static final String DIR_PATH = "webapps/cocorobo-pet/WEB-INF/classes/static/";
 
     /**
      * ファイルの保存
@@ -22,13 +23,13 @@ public class FileHelper {
      * @throws IOException
      */
     public String saveFile(MultipartFile multipartFile) throws IOException {
-        File uploadFile =
-                new File(uploadDirectory, NAME);
+        String name = UUID.randomUUID().toString();
+        File uploadFile = new File(uploadDirectory, DIR_PATH + name);
 
         // (2)
         FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), uploadFile);
 
-        return NAME;
+        return name;
 
     }
 }

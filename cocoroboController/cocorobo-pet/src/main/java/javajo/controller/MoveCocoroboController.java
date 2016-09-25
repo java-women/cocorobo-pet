@@ -1,4 +1,4 @@
-package javajo;
+package javajo.controller;
 
 import javajo.dto.DirectionDTO;
 import org.springframework.http.HttpStatus;
@@ -19,10 +19,9 @@ public class MoveCocoroboController{
     /**
      * 画像を受け取って、人の位置を判定し、ココロボが進む方向を決定する
      *
-     * @param
-     * ココロボの種類(String)
-     * ユーザID(String)
-     * 写真(String)
+     * @param cocorobo ココロボの種類(String)
+     * @param userId ユーザID(String)
+     * @param url 写真(String)
      *
      * @return modeの種類
      * modeの種類
