@@ -15,7 +15,7 @@ import okhttp3.Response;
 public class FeelApiTask extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = "FeelAPI";
-    private static final String API_URL = "http://javajo-erk5.azurewebsites.net/cocorobo-pet/api/feels/toko";
+    private static final String API_URL = "http://javajo-api.azurewebsites.net/cocorobo-pet/api/feels/toko";
 
     @Override
     protected String doInBackground(Void... voids) {

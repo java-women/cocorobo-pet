@@ -15,7 +15,7 @@ import okhttp3.Response;
 public class MoveApiTask extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = "MoveAPI";
-    private static final String API_URL = "http://javajo-erk5.azurewebsites.net/cocorobo-pet/api/moves/toko";
+    private static final String API_URL = "http://javajo-api.azurewebsites.net/cocorobo-pet/api/moves/toko";
 
     @Override
     protected String doInBackground(Void... voids) {
