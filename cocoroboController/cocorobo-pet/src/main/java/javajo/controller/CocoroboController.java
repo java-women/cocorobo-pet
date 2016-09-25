@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -101,7 +102,7 @@ public class CocoroboController {
      * @return JSON形式の文字列
      */
     @PostMapping(value = "/moves/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MoveDTO> move(@PathVariable String cocorobo) {
+    public ResponseEntity<MoveDTO> move(@PathVariable String cocorobo) throws IOException {
         log.info("REST request to move. cocorobo : {}",cocorobo);
 
 		MoveDTO moveDTO = new MoveDTO();
