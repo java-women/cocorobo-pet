@@ -33,7 +33,7 @@ public class CognitiveService {
      * @return 登録写真情報
      */
     public Detect[] makeFaceInfo(String photoUrl) {
-        logger.debug("Face情報の登録をします");
+        logger.debug("Face情報の登録をします: " + photoUrl);
 
         //request bodyの作成
         RequestDetect postBody = new RequestDetect();
