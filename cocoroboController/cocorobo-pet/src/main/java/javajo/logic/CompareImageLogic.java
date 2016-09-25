@@ -7,14 +7,12 @@ import javajo.model.detect.Detect;
 import javajo.model.request.RequestRedisValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 /**
  * Created by maaya on 2016/09/25.
  */
-@Component
 public class RegisterImageLogic {
 
     /**
