@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/javajoColor</item>
         <item name="colorPrimaryDark">@color/javajoColorLight</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
 </resources>

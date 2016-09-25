@@ -15,6 +15,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //さつえいモードへ
+        Button photoButton = (Button) findViewById(R.id.photo);
+        if (photoButton != null){
+            photoButton.setOnClickListener(view ->
+                    startActivity(new Intent(MainActivity.this, PhotoActivity.class))
+            );
+        }
         clickFeelButton();
     }
 
@@ -23,6 +30,6 @@ public class MainActivity extends AppCompatActivity {
         if (feelButton != null) {
             feelButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, FeelActivity.class)));
         }
-    }
 
+    }
 }
