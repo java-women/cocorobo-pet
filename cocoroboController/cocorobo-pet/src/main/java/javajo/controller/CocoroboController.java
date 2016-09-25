@@ -1,16 +1,13 @@
 package javajo.controller;
 
-import javajo.dto.FeelDTO;
-import javajo.dto.MoveDTO;
-import javajo.dto.SpeechDTO;
+import javajo.dto.*;
 import javajo.enums.StatusEnum;
 import javajo.model.verify.Verify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,6 +21,9 @@ import java.util.List;
 public class CocoroboController {
 
     private final Logger log = LoggerFactory.getLogger(CocoroboController.class);
+    private final String SPEECH_URL = "https://developer.cloudlabs.sharp.co.jp/cloudlabs-api/cocorobo/speech";
+    private final String API_KEY = "api key";
+    private final String AUTH_URL = "https://developer.cloudlabs.sharp.co.jp/cloudlabs-api/cocorobo/auth";
 
     /**
      * 指定されたCOCOROBOの感情を取得する.
@@ -66,7 +66,7 @@ public class CocoroboController {
      * 指定されたCOCOROBOに指定した文字列で音声発話させる.
      *
      * @param cocorobo COCOROBOの識別子：例)toko
-     * @param message
+     * @param message メッセージ
      * @return JSON形式の文字列(COCOROBO音声発話APIのレスポンス)：<pre>{@code
      * {
      *     "resultCode": 結果コード,
@@ -78,21 +78,48 @@ public class CocoroboController {
      */
     @PostMapping(value = "/speeches/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SpeechDTO> speech(@PathVariable String cocorobo, @RequestBody String message) {
-        log.info("REST request speech : {}, message : {}",cocorobo, message);
+        log.info("REST request speech : {}, message : {}", cocorobo, message);
+        return new ResponseEntity(sentMessageForCocorobo(message), HttpStatus.OK);
+    }
 
-        /* モックデータ作成開始 */
-        SpeechDTO speechDTO = new SpeechDTO();
-        speechDTO.setResultCode(0);
-        /* モックデータ作成終了 */
+    /**
+     * COCOROBOに発話させる.
+     *
+     * @param message COCOROBOに発話させるメッセージ
+     * @return SpeechDTO
+     */
+    private String sentMessageForCocorobo(String message) {
+        // request bodyの作成
+        RequestSpeechDTO requestSpeechDTO = new RequestSpeechDTO();
+        requestSpeechDTO.setMessage(message);
+        requestSpeechDTO.setApikey_cocorobo(API_KEY);
 
-        return new ResponseEntity(new SpeechDTO(), HttpStatus.OK);
+        //HttpHeaderの作成
+        HttpHeaders headers = createHttpHeaders();
+
+        //request用Entity作成
+        HttpEntity<RequestSpeechDTO> request = new HttpEntity(requestSpeechDTO, headers);
+
+        // CocoroboApiの発話APIを実行.
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForObject(SPEECH_URL, request, String.class);
+    }
+
+    /**
+     * CocoroboAPIのHttpHeaderを作成します.
+     *
+     * @return Headers
+     */
+    private HttpHeaders createHttpHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_UTF8.toString());
+
+        return headers;
     }
 
     /**
      * Cocoroboを動作させる.
-     *
-     * @param cocorobo COCOROBOの識別子：例)toko
-     * @param verify Verify
+     * * @param verify Verify
      * @return JSON形式の文字列
      */
     @PostMapping(value = "/moves/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
