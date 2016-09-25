@@ -37,6 +37,18 @@ public class JacsonHelper {
         return mapper.readValue(json, RedisValue.class);
     }
 
+    /**
+     * String -> Json(RequestRedisValue)
+     *
+     * @param strJson
+     * @return
+     * @throws IOException
+     */
+    public RedisValue stringToJson(String strJson) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(strJson, RedisValue.class);
+    }
+
     public Map stringForMap(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Map.class);

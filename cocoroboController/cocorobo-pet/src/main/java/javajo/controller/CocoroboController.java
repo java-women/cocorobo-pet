@@ -3,9 +3,11 @@ package javajo.controller;
 import javajo.dto.*;
 import javajo.enums.StatusEnum;
 import javajo.hepler.JacsonHelper;
+import javajo.logic.CocoroboLogic;
 import javajo.model.verify.Verify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -27,6 +29,9 @@ public class CocoroboController {
     private final String SPEECH_URL = "https://developer.cloudlabs.sharp.co.jp/cloudlabs-api/cocorobo/speech";
     private final String API_KEY = "api key";
     private final String AUTH_URL = "https://developer.cloudlabs.sharp.co.jp/cloudlabs-api/cocorobo/auth";
+
+    @Autowired
+    private CocoroboLogic cocoroboLogic;
 
     /**
      * 指定されたCOCOROBOの感情を取得する.
@@ -164,19 +169,14 @@ public class CocoroboController {
      * @return JSON形式の文字列
      */
     @PostMapping(value = "/moves/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MoveDTO> move(@PathVariable String cocorobo, Verify verify) {
-        log.info("REST request to move. cocorobo : {}, verify : {}",cocorobo, verify);
+    public ResponseEntity<MoveDTO> move(@PathVariable String cocorobo) throws IOException {
+        log.info("REST request to move. cocorobo : {}",cocorobo);
 
-        // TODO 方向計算
-
-        // TODO COCOROBOの動作APIを呼び出す
-
-        /* モックデータ作成開始 */
         MoveDTO moveDTO = new MoveDTO();
         moveDTO.setResult(StatusEnum.OK.getName());
-        /* モックデータ作成終了 */
+        moveDTO.setMoveCommand(cocoroboLogic.getMoveDirection());
 
-        return new ResponseEntity(new MoveDTO(), HttpStatus.OK);
+        return new ResponseEntity(moveDTO, HttpStatus.OK);
     }
 
 }
