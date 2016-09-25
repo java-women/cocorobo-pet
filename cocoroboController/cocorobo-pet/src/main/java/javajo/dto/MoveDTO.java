@@ -11,4 +11,6 @@ public class MoveDTO {
 	// 実行結果
 	public String result;
 
+	public String moveCommand;
+
 }

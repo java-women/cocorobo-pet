@@ -4,9 +4,10 @@ import javajo.dto.FeelDTO;
 import javajo.dto.MoveDTO;
 import javajo.dto.SpeechDTO;
 import javajo.enums.StatusEnum;
-import javajo.model.verify.Verify;
+import javajo.service.CocoroboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ import java.util.List;
 public class CocoroboController {
 
     private final Logger log = LoggerFactory.getLogger(CocoroboController.class);
+
+	@Autowired
+	private CocoroboService cocoroboService;
 
     /**
      * 指定されたCOCOROBOの感情を取得する.
@@ -90,25 +94,21 @@ public class CocoroboController {
 
     /**
      * Cocoroboを動作させる.
+	 *
+	 * TODO 計算処理はService化する.
      *
      * @param cocorobo COCOROBOの識別子：例)toko
-     * @param verify Verify
      * @return JSON形式の文字列
      */
     @PostMapping(value = "/moves/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MoveDTO> move(@PathVariable String cocorobo, Verify verify) {
-        log.info("REST request to move. cocorobo : {}, verify : {}",cocorobo, verify);
+    public ResponseEntity<MoveDTO> move(@PathVariable String cocorobo) {
+        log.info("REST request to move. cocorobo : {}",cocorobo);
 
-        // TODO 方向計算
+		MoveDTO moveDTO = new MoveDTO();
+		moveDTO.setResult(StatusEnum.OK.getName());
+		moveDTO.setMoveCommand(cocoroboService.getMoveDirection());
 
-        // TODO COCOROBOの動作APIを呼び出す
-
-        /* モックデータ作成開始 */
-        MoveDTO moveDTO = new MoveDTO();
-        moveDTO.setResult(StatusEnum.OK.getName());
-        /* モックデータ作成終了 */
-
-        return new ResponseEntity(new MoveDTO(), HttpStatus.OK);
+		return new ResponseEntity(moveDTO, HttpStatus.OK);
     }
 
 }

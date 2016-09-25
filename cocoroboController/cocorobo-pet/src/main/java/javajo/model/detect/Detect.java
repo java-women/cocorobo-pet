@@ -11,4 +11,7 @@ public class Detect {
 
     String faceId;
     FaceRectangle faceRectangle;
+
+    double width;
+    double height;
 }
