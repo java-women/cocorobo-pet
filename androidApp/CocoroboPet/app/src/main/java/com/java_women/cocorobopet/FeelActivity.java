@@ -115,8 +115,8 @@ public class FeelActivity extends AppCompatActivity {
                     } catch (RemoteException e) {
                         Log.e(MOVE_TAG, "RemoteException!!!");
                     }
-                    Log.d(MOVE_TAG, move.toString());
                 }
+                Log.e(MOVE_TAG, move.toString());
             }
         };
         callMoveApi(moveApiTask);
