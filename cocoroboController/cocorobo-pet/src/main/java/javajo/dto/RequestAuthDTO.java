@@ -7,5 +7,5 @@ import lombok.Data;
  */
 @Data
 public class RequestAuthDTO {
-	private String apikeyCocorobo;
+	private String apikey_cocorobo;
 }

@@ -104,7 +104,7 @@ public class CocoroboController {
 
         // request bodyの作成
         RequestAuthDTO requestAuthDTO = new RequestAuthDTO();
-        requestAuthDTO.setApikeyCocorobo(API_KEY);
+        requestAuthDTO.setApikey_cocorobo(API_KEY);
 
         //HttpHeaderの作成
         HttpHeaders headers = createHttpHeaders();
