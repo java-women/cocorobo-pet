@@ -3,6 +3,9 @@ package javajo;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
+/**
+ * 継承ファイル生成
+ */
 public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
