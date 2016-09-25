@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 /**
  * Http送信クラス
  */
-public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
+public class HttpPostTask extends AsyncTask<Void, Void, byte[]> {
 
     final static private String TAG = "HttpPost";
 
@@ -33,11 +33,10 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
 
     private Context mContext;
 
-    public HttpPostTask(Context context)
-    {
+    public HttpPostTask(Context context) {
         super();
 
-        mContext  = context;
+        mContext = context;
         //送信先URL
         mURL = null;
         //Activityへ送信結果通知リスナー
@@ -65,48 +64,48 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
 
     /**
      * リスナーをセットする。
+     *
      * @param listener
      */
-    public void setListener(HttpPostListener listener)
-    {
+    public void setListener(HttpPostListener listener) {
         mListener = listener;
     }
 
     /**
      * 送信先URLを追加する。
+     *
      * @param url
      */
-    public void addURL(String url)
-    {
+    public void addURL(String url) {
         mURL = url;
     }
 
     /**
      * 送信するテキストを追加する。
+     *
      * @param key
      * @param text
      */
-    public void addText(String key, String text)
-    {
+    public void addText(String key, String text) {
         mTexts.put(key, text);
     }
 
     /**
      * 送信する画像を追加する。
+     *
      * @param key
      * @param data
      */
-    public void addImage(String key, byte[] data)
-    {
+    public void addImage(String key, byte[] data) {
         mImages.put(key, data);
     }
 
     /**
      * 送信を行う。
+     *
      * @return レスポンスデータ
      */
-    private byte[] send(byte[] data)
-    {
+    private byte[] send(byte[] data) {
         if (data == null) {
             return null;
         }
@@ -116,7 +115,7 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
 
         try {
             URL url = new URL(mURL);
-            connection = (HttpURLConnection)url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             //マルチパートデータで送信するよ！！
             connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
             connection.setRequestMethod("POST");
@@ -130,27 +129,31 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
             os.write(data);
             os.close();
 
-           int response =  connection.getResponseCode();
+            int response = connection.getResponseCode();
 
             if (response == 200) {
-                result = toBytes(200) ;
+                result = toBytes(200);
             } else {
                 //エラー
                 result = null;
 
             }
 
-            Log.i(TAG, "result :" + result);
-            Log.i(TAG, "result Msg :" + connection.getResponseMessage());
+            Log.i(TAG, "responseCode :" + response);
+            Log.i(TAG, "response Msg :" + connection.getResponseMessage());
 
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
 
-                connection.disconnect();
-            } catch (Exception e) {}
+                if (connection != null) {
+                    connection.disconnect();
+                }
+
+            } catch (Exception e) {
+            }
         }
 
         return result;
@@ -158,16 +161,15 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
 
     /**
      * POSTするデータを作成する。
+     *
      * @return
      */
-    private byte[] makePostData()
-    {
+    private byte[] makePostData() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try {
             // テキスト部分の設定
-            for (Entry<String, String> entry : mTexts.entrySet())
-            {
+            for (Entry<String, String> entry : mTexts.entrySet()) {
                 String key = entry.getKey();
                 String text = entry.getValue();
 
@@ -178,8 +180,7 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
             }
 
             // 画像の設定
-            for (Entry<String, byte[]> entry: mImages.entrySet())
-            {
+            for (Entry<String, byte[]> entry : mImages.entrySet()) {
                 String key = entry.getKey();
                 byte[] data = entry.getValue();
                 String name = "faceImage";
@@ -197,13 +198,14 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
             baos.write(("--" + BOUNDARY + "--\r\n").getBytes());
 
             return baos.toByteArray();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {
             try {
                 baos.close();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -236,23 +238,18 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
      * 送信処理結果をリスナーを介してActivityに通知
      */
     @Override
-    protected void onPostExecute(byte[] result){
+    protected void onPostExecute(byte[] result) {
 
-        if ( progressDialog != null && progressDialog.isShowing() )
-        {
+        if (progressDialog != null && progressDialog.isShowing()) {
             //プログレスダイアログを消去
             progressDialog.dismiss();
         }
 
-        if (mListener != null)
-        {
-            if (result != null)
-            {
+        if (mListener != null) {
+            if (result != null) {
                 //成功
                 mListener.postCompletion(result);
-            }
-            else
-            {
+            } else {
                 //失敗
                 mListener.postFailure();
             }

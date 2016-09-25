@@ -37,7 +37,9 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
 
         //画像表示・保持用のImageView
         imageView = (ImageView) findViewById(R.id.image_view);
-        imageView.setImageResource(R.drawable.javajo);
+        if ( imageView != null) {
+            imageView.setImageResource(R.drawable.javajo);
+        }
         //飼い主名のテキスト
         ownerNameText = (EditText) findViewById(R.id.ownerNameTxt);
         //Activityコンテキスト
@@ -50,7 +52,6 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                     //カメラ起動
                     //戻り値をstartActivityForResultへ
                     startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), RESULT_CAMERA)
-
             );
         }
         Button sendButton =(Button)findViewById(R.id.photoSend);
@@ -71,7 +72,7 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                     //Http送信クラス
                     HttpPostTask task = new HttpPostTask(context);
                     //URL
-                   task.addURL("http://javajo-api.azurewebsites.net/cocorobo-pet/api/registerImage");
+                    task.addURL("http://javajo-api.azurewebsites.net/cocorobo-pet/api/registerImage");
 
                     // task.addURL("http://10.0.2.2:8080/api/registerImage");
 
@@ -92,10 +93,9 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                     //実行（非同期処理）
                     task.execute();
             });
-
         }
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //カメラを起動しコールバックされたとき
@@ -109,13 +109,18 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
         }
     }
 
+    /**
+     * 送信が成功(200)したときに呼ばれる
+     */
     @Override
     public void postCompletion(byte[] response) {
         Log.i(TAG, "post completion!");
         Log.i(TAG, new String(response));
         Toast.makeText(context, "送信に成功しました", Toast.LENGTH_LONG).show();
     }
-
+    /**
+     * 送信が失敗(200以外)したときに呼ばれる
+     */
     @Override
     public void postFailure() {
         Log.i(TAG, "post failure!");
