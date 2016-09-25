@@ -23,7 +23,7 @@ public class FileHelper {
      * @throws IOException
      */
     public String saveFile(MultipartFile multipartFile) throws IOException {
-        String name = UUID.randomUUID().toString();
+        String name = UUID.randomUUID().toString() + ".jpg";
         File uploadFile = new File(uploadDirectory, DIR_PATH + name);
 
         // (2)
