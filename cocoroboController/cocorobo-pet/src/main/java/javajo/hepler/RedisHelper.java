@@ -1,4 +1,4 @@
-package javajo.service;
+package javajo.hepler;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisShardInfo;
@@ -7,12 +7,13 @@ import redis.clients.jedis.JedisShardInfo;
  * Redis接続サービス
  * Created by maaya on 2016/09/25.
  */
-public class RedisService {
+public class RedisHelper {
     private static Jedis jedis;
 
     private static final String HOST_NAME = "javajo-redis.redis.cache.windows.net";
     private static final int PORT = 6379;
-    private static final String AUTH = "ICPEV/ecCccyrc8FUp1Awf/yipErNUK2QJmb4XzomUQ=";
+    private static final String AUTH = "aEQzn3vwwAhPxi/9OM4pZnpGm+f1fDvhe0AtXhCD/jM=";
+
 
     /**
      * コネクションを取得します
@@ -62,5 +63,4 @@ public class RedisService {
 
         return jedis.get(key);
     }
-
 }

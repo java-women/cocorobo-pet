@@ -1,4 +1,4 @@
-package javajo.service;
+package javajo.hepler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +17,9 @@ import javajo.model.request.RequestVerify;
  * 今回はCognitiveAPiとの接続サービス層
  * Created by user on 2016/09/20.
  */
-public class CognitiveService {
+public class CognitiveHelper {
 
-    private static final Logger logger = LoggerFactory.getLogger(CognitiveService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CognitiveHelper.class);
 
     //Face API
     private final String apiKey = "yourAPIkey";
