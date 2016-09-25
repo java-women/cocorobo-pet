@@ -1,14 +1,16 @@
 package javajo.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javajo.dto.CompareImageDTO;
 import javajo.dto.RegisterImgDTO;
 import javajo.enums.StatusEnum;
-import javajo.hepler.FileHelper;
+import javajo.hepler.*;
+import javajo.logic.RegisterImageLogic;
 import javajo.model.detect.Detect;
-import javajo.hepler.CognitiveHelper;
-import javajo.hepler.RedisHelper;
+import javajo.model.request.RequestRedisValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,9 @@ public class CognitiveController {
 
     private final Logger log = LoggerFactory.getLogger(CognitiveController.class);
 
+    @Autowired
+    private RegisterImageLogic logic;
+
     /**
      * Androidから画像を受け取り結果を返す.
      *
@@ -42,41 +47,35 @@ public class CognitiveController {
      * }</pre>
      */
     @PostMapping(value = "/registerImage", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity registerImage(@RequestParam("userId") String userId, @RequestParam("faceImage") MultipartFile faceImg) {
+    public ResponseEntity registerImage(@RequestParam("userId") String userId, @RequestParam("faceImage") MultipartFile faceImg) throws IOException{
         log.info("REST request registerImage : {}, faceImage : {}", userId, faceImg);
-
-        RegisterImgDTO results = new RegisterImgDTO();
 
         //画像をローカルに保存
         String uploadFile;
-        FileHelper fileHelper = new FileHelper();
         try {
-            uploadFile = fileHelper.saveFile(faceImg);
+            uploadFile = new FileHelper().saveFile(faceImg);
         } catch (IOException e) {
-            results.setResult(StatusEnum.NG.getName());
-            return new ResponseEntity<>(results, HttpStatus.BAD_REQUEST);
+            return logic.responseError();
         }
 
         //受け取った写真データをDetectAPIに送付
-        CognitiveHelper cognitive = new CognitiveHelper();
-        Detect[] faceInfo = cognitive.makeFaceInfo(uploadFile);
+        Detect[] faceInfo = new CognitiveHelper().makeFaceInfo(uploadFile);
+
+        //JSONデータ作成
+        RequestRedisValue redisModel = logic.createRedisValue(uploadFile, faceInfo);
 
         //DetectAPIのデータをredisに登録
         RedisHelper redis = new RedisHelper();
         try{
-
-            redis.setKeyValue("user", );
+            redis.setKeyValue("user", new JacsonHelper().objectForJson(redisModel));
+        } catch (JsonProcessingException e) {
+            return logic.responseError();
+        } finally {
+            redis.disconnect();
         }
 
-
-        //responce作成
-
-        /* モックデータ作成開始 */
-//        registerImgDTO.setResult(StatusEnum.OK.getName());
-//        registerImgDTO.setFaceId("aaaaaaaaaaaaaa");
-//        /* モックデータ作成終了 */
-
-        return new ResponseEntity(registerImgDTO, HttpStatus.OK);
+        //ハッカソンなのでとりあえず1人目の情報だけ・・・
+        return logic.createApiResponse(faceInfo[0].getFaceId());
     }
 
     @PostMapping(value = "/compareImage", produces = MediaType.APPLICATION_JSON_VALUE)
