@@ -10,12 +10,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * FeelAPIの非同期処理.
+ * COCOROBOの動作APIの非同期処理.
  */
-public class FeelApiTask extends AsyncTask<Void, Void, String> {
+public class MoveApiTask extends AsyncTask<Void, Void, String> {
 
-    private static final String TAG = "FeelAPI";
-    private static final String API_URL = "http://javajo-api.azurewebsites.net/cocorobo-pet/api/feels/toko";
+    private static final String TAG = "MoveAPI";
+    private static final String API_URL = "http://javajo-api.azurewebsites.net/cocorobo-pet/api/moves/toko";
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -30,7 +30,7 @@ public class FeelApiTask extends AsyncTask<Void, Void, String> {
             Response response = client.newCall(request).execute();
             result = response.body().string();
         } catch (IOException e) {
-            Log.e(TAG, "Can't get feel api.");
+            Log.e(TAG, "Can't get move api.");
         }
 
         return result;
