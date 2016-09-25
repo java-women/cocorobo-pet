@@ -6,7 +6,8 @@ package javajo.enums;
  */
 public enum StatusEnum {
     OK("OK"),
-    NG("NG");
+    NG("NG"),
+    ERROR("ERROR");
 
     private final String status;
 

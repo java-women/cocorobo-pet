@@ -13,5 +13,5 @@ public class FacialHair {
     Double mustache;
     Double beard;
     Double sideburns;
-    
+
 }
