@@ -113,7 +113,7 @@ public class CocoroboController {
         JacsonHelper jacsonHelper = new JacsonHelper();
         try {
             Map map = jacsonHelper.stringForMap(response);
-            if ((int) map.get("resultCode") == 0) {
+            if (Integer.parseInt((String) map.get("resultCode")) == 0) {
                 result = true;
             }
         } catch (IOException e) {
