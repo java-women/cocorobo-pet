@@ -66,9 +66,11 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
                 //Http送信クラス
                 HttpPostTask task = new HttpPostTask(context);
                 //URL
-                task.addURL("http://...");
+               task.addURL("http://javajo-api.azurewebsites.net/cocorobo-pet/api/registerImage");
 
-                //Http送信クラスに飼い主名を設定
+              // task.addURL("http://10.0.2.2:8080/api/registerImage");
+
+            //Http送信クラスに飼い主名を設定
                 task.addText("userId", ownerName);
 
                 //ImageView画像をbmp→byteに変換

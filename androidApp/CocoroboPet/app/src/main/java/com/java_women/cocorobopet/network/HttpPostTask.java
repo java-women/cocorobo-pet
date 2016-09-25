@@ -3,6 +3,9 @@ package com.java_women.cocorobopet.network;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.java_women.cocorobopet.dto.RegisterImgDTO;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -16,6 +19,8 @@ import java.util.Map.Entry;
  * Http送信クラス
  */
 public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
+
+    final static private String TAG = "HttpPost";
 
     final static private String BOUNDARY = "MyBoundaryString";
     //Activityへ送信結果通知リスナー
@@ -47,6 +52,21 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
     }
 
     /**
+     * intをバイト配列にします。
+     *
+     * @param a
+     * @return
+     */
+    static byte[] toBytes(int a) {
+        byte[] bs = new byte[4];
+        bs[3] = (byte) (0x000000ff & (a));
+        bs[2] = (byte) (0x000000ff & (a >>> 8));
+        bs[1] = (byte) (0x000000ff & (a >>> 16));
+        bs[0] = (byte) (0x000000ff & (a >>> 24));
+        return bs;
+    }
+
+    /**
      * リスナーをセットする。
      * @param listener
      */
@@ -63,7 +83,6 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
     {
         mURL = url;
     }
-
 
     /**
      * 送信するテキストを追加する。
@@ -91,10 +110,11 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
      */
     private byte[] send(byte[] data)
     {
-        if (data == null)
+        if (data == null) {
             return null;
+        }
 
-        byte[] result = null;
+        byte[] result = new byte[10240];
         HttpURLConnection connection = null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         InputStream is = null;
@@ -115,15 +135,22 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
             os.write(data);
             os.close();
 
-            // レスポンスを取得する
-            byte[] buf = new byte[10240];
-            int size;
-            is = connection.getInputStream();
-            while ((size = is.read(buf)) != -1)
-            {
-                baos.write(buf, 0, size);
+            RegisterImgDTO registerDto = new RegisterImgDTO();
+
+           int response =  connection.getResponseCode();
+
+            if (response == 200) {
+                result = toBytes(200) ;
+            } else {
+                //エラー
+                result = null;
+
             }
-            result = baos.toByteArray();
+
+            Log.i(TAG, "result :" + result);
+            Log.i(TAG, "result Msg :" + connection.getResponseMessage());
+
+
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
@@ -198,6 +225,7 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
         byte[] data = makePostData();
         //送信処理
         byte[] result = send(data);
+
         //送信処理のレスポンスを返却
         return result;
     }
