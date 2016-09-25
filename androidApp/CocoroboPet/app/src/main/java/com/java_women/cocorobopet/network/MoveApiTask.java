@@ -5,9 +5,12 @@ import android.util.Log;
 
 import java.io.IOException;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 
 /**
  * COCOROBOの動作APIの非同期処理.
@@ -20,8 +23,19 @@ public class MoveApiTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return null;
+            }
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+            }
+        };
+
         Request request = new Request.Builder()
                 .url(API_URL)
+                .post(requestBody)
                 .build();
 
         String result = null;
