@@ -3,6 +3,7 @@ package javajo.hepler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javajo.dto.CompareImageDTO;
+import javajo.model.request.RequestRedisValue;
 
 import java.io.IOException;
 
@@ -22,5 +23,16 @@ public class JacsonHelper {
         return mapper.writeValueAsString(obj);
     }
 
+    /**
+     * String -> Json(RequestRedisValue)
+     *
+     * @param strJson
+     * @return
+     * @throws IOException
+     */
+    public RequestRedisValue stringToJson(String strJson) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(strJson, RequestRedisValue.class);
+    }
 
  }
