@@ -14,7 +14,7 @@ import java.util.UUID;
 public class FileHelper {
 
     private File uploadDirectory;
-    private static final String DIR_PATH = "webapps/cocorobo-pet/WEB-INF/classes/static/";
+    public static final String DIR_PATH = "webapps/cocorobo-pet/WEB-INF/classes/static/";
 
     /**
      * ファイルの保存
