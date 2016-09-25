@@ -1,9 +1,6 @@
 package javajo.controller;
 
-import javajo.dto.FeelDTO;
-import javajo.dto.MoveDTO;
-import javajo.dto.RequestSpeechDTO;
-import javajo.dto.SpeechDTO;
+import javajo.dto.*;
 import javajo.enums.StatusEnum;
 import javajo.model.verify.Verify;
 import org.slf4j.Logger;
@@ -25,6 +22,8 @@ public class CocoroboController {
 
     private final Logger log = LoggerFactory.getLogger(CocoroboController.class);
     private final String SPEECH_URL = "https://developer.cloudlabs.sharp.co.jp/cloudlabs-api/cocorobo/speech";
+    private final String API_KEY = "api key";
+    private final String AUTH_URL = "https://developer.cloudlabs.sharp.co.jp/cloudlabs-api/cocorobo/auth";
 
     /**
      * 指定されたCOCOROBOの感情を取得する.
@@ -67,7 +66,7 @@ public class CocoroboController {
      * 指定されたCOCOROBOに指定した文字列で音声発話させる.
      *
      * @param cocorobo COCOROBOの識別子：例)toko
-     * @param requestSpeechDTO API Keyとメッセージ
+     * @param message メッセージ
      * @return JSON形式の文字列(COCOROBO音声発話APIのレスポンス)：<pre>{@code
      * {
      *     "resultCode": 結果コード,
@@ -77,19 +76,24 @@ public class CocoroboController {
      * }
      * }</pre>
      */
-    @PostMapping(value = "/speeches/{cocorobo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SpeechDTO> speech(@PathVariable String cocorobo, @RequestBody RequestSpeechDTO requestSpeechDTO) {
-        log.info("REST request speech : {}, requestSpeechDTO : {}", cocorobo, requestSpeechDTO);
-        return new ResponseEntity(sentMessageForCocorobo(requestSpeechDTO), HttpStatus.OK);
+    @PostMapping(value = "/speeches/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SpeechDTO> speech(@PathVariable String cocorobo, @RequestBody String message) {
+        log.info("REST request speech : {}, message : {}", cocorobo, message);
+        return new ResponseEntity(sentMessageForCocorobo(message), HttpStatus.OK);
     }
 
     /**
      * COCOROBOに発話させる.
      *
-     * @param requestSpeechDTO COCOROBOに発話させるメッセージが入っているDTO
+     * @param message COCOROBOに発話させるメッセージ
      * @return SpeechDTO
      */
-    private String sentMessageForCocorobo(RequestSpeechDTO requestSpeechDTO) {
+    private String sentMessageForCocorobo(String message) {
+        // request bodyの作成
+        RequestSpeechDTO requestSpeechDTO = new RequestSpeechDTO();
+        requestSpeechDTO.setMessage(message);
+        requestSpeechDTO.setApikey_cocorobo(API_KEY);
+
         //HttpHeaderの作成
         HttpHeaders headers = createHttpHeaders();
 
