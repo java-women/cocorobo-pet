@@ -22,9 +22,10 @@ public class CognitiveHelper {
     private static final Logger logger = LoggerFactory.getLogger(CognitiveHelper.class);
 
     //Face API
-    private final String apiKey = "yourAPIkey";
+    private final String apiKey = "";
     private final String verifyUrl = "https://api.projectoxford.ai/face/v1.0/verify";
     private final String detectUrl = "https://api.projectoxford.ai/face/v1.0/detect";
+    private final String photoDomain = "http://javajo-api.azurewebsites.net/cocorobo-pet/";
 
     /**
      * DetectAPIの実行
@@ -37,7 +38,7 @@ public class CognitiveHelper {
 
         //request bodyの作成
         RequestDetect postBody = new RequestDetect();
-        postBody.setUrl(photoUrl);
+        postBody.setUrl(photoDomain + photoUrl);
 
         //HttpHeaderの作成
         HttpHeaders headers = createHttpHeaders();
