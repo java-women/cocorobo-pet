@@ -33,7 +33,7 @@ public class WebcamScheduledTasks {
 	 *
 	 * @throws IOException
 	 */
-	@Scheduled(initialDelay = 10000, fixedRate = 5000)
+	@Scheduled(initialDelay = 10000, fixedRate = 10000)
 	public void sendWebcamCapture() throws IOException {
 		// ペットモードでない場合は写真を撮らない
 		if (!Constants.isPetMode()) {
@@ -59,7 +59,7 @@ public class WebcamScheduledTasks {
 
 				//request用Entity作成
 				MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
-				parts.add("upload_file", new FileSystemResource(file));
+				parts.add("compareFile", new FileSystemResource(file));
 				HttpEntity<MultiValueMap> request = new HttpEntity<>(parts, headers);
 
 				// CocoroboApiの画像比較APIを実行.

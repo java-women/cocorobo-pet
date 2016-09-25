@@ -12,7 +12,7 @@ public class Constants {
 	public static final String cocorobo = "toko";
 
 	// TODO とりあえずURLは固定 本番用のURLが決まったら修正
-	private static final String BASE_URL = "http://javajo-erk5.azurewebsites.net/cocorobo-pet";
+	private static final String BASE_URL = "http://javajo-api.azurewebsites.net/cocorobo-pet";
 	public static final String SPEECH_URL = BASE_URL + "/api/speeches/" + cocorobo;
 	public static final String COMPARE_IMAGE_URL = BASE_URL + "/api/compareImage";
 
