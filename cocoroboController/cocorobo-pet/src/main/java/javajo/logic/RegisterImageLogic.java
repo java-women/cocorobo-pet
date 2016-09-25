@@ -2,6 +2,7 @@ package javajo.logic;
 
 import javajo.dto.RegisterImgDTO;
 import javajo.enums.StatusEnum;
+import javajo.hepler.FileHelper;
 import javajo.hepler.ImageHelper;
 import javajo.model.detect.Detect;
 import javajo.model.redis.RedisValue;
@@ -37,7 +38,7 @@ public class RegisterImageLogic {
      */
     public RedisValue createRedisValue(String uploadFile, Detect[] faceInfo) throws IOException{
         RedisValue redisModel = new RedisValue();
-        ImageHelper image = new ImageHelper(uploadFile);
+        ImageHelper image = new ImageHelper(FileHelper.DIR_PATH + uploadFile);
         redisModel.setDetects(faceInfo);
         redisModel.setWidth(image.getWidth());
         redisModel.setHeight(image.getWidth());
@@ -52,6 +53,7 @@ public class RegisterImageLogic {
      */
     public ResponseEntity createApiResponse(String faceId) {
         RegisterImgDTO results = new RegisterImgDTO();
+        results.setFaceId(faceId);
         results.setResult(StatusEnum.OK.getName());
         return new ResponseEntity<>(results, HttpStatus.OK);
     }

@@ -73,6 +73,7 @@ public class CognitiveController {
         //DetectAPIのデータをredisに登録
         RedisHelper redis = new RedisHelper();
         try {
+            redis.deleteKey(REDIS_KEY);
             redis.setKeyValue(REDIS_KEY, new JacsonHelper().objectForJson(redisModel));
         } catch (JsonProcessingException e) {
             return registerImageLogicimageLogic.responseError();

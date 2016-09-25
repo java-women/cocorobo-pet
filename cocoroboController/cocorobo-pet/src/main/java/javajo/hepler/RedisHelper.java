@@ -12,7 +12,7 @@ public class RedisHelper {
 
     private static final String HOST_NAME = "javajo-redis.redis.cache.windows.net";
     private static final int PORT = 6379;
-    private static final String AUTH = "aEQzn3vwwAhPxi/9OM4pZnpGm+f1fDvhe0AtXhCD/jM=";
+    private static final String AUTH = "";
 
 
     /**
@@ -62,5 +62,14 @@ public class RedisHelper {
         connect();
 
         return jedis.get(key);
+    }
+
+    /**
+     * delete
+     * @param key
+     */
+    public void deleteKey(String key) {
+        connect();
+        jedis.del(key);
     }
 }
