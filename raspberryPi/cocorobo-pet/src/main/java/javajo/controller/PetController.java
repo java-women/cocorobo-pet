@@ -1,5 +1,6 @@
 package javajo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javajo.config.Constants;
 import javajo.dto.RequestSpeechDTO;
 import javajo.dto.SpeechDTO;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
 
 /**
  * ペットモード操作クラス.
@@ -29,7 +32,7 @@ public class PetController {
 	 * @return メッセージ
 	 */
 	@PutMapping(value = "/pet-mode/start", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> startPetMode() {
+	public ResponseEntity<String> startPetMode() throws IOException {
 		log.debug("REST request to start pet mode");
 
 		if (!Constants.isPetMode()) {
@@ -57,7 +60,7 @@ public class PetController {
 	 * @return メッセージ
 	 */
 	@PutMapping(value = "/pet-mode/end", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> endPetMode() {
+	public ResponseEntity<String> endPetMode() throws IOException {
 		log.debug("REST request to start pet mode");
 
 		if (Constants.isPetMode()) {
@@ -85,7 +88,7 @@ public class PetController {
 	 * @param message COCOROBOに発話させるメッセージ
 	 * @return SpeechDTO
 	 */
-	private SpeechDTO sentMessageForCocorobo(String message) {
+	private SpeechDTO sentMessageForCocorobo(String message) throws IOException {
 		// request bodyの作成
 		RequestSpeechDTO requestSpeechDTO = new RequestSpeechDTO();
 		requestSpeechDTO.setMessage(END_MESSAGE);
@@ -98,7 +101,9 @@ public class PetController {
 
 		// CocoroboApiの発話APIを実行.
 		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.postForObject(Constants.SPEECH_URL, request, SpeechDTO.class);
+		String response = restTemplate.postForObject(Constants.SPEECH_URL, request, String.class);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(response, SpeechDTO.class);
 	}
 
 }
