@@ -20,8 +20,6 @@ public class PetController {
 
 	private final Logger log = LoggerFactory.getLogger(PetController.class);
 
-	// TODO とりあえずURLは固定 本番用のURLが決まったら修正
-	private final String SPEECH_URL = "http://javajo-erk5.azurewebsites.net/cocorobo-pet/api/speeches/toko";
 	private final String START_MESSAGE = "ペットモードを開始します。";
 	private final String END_MESSAGE = "ペットモードを終了します。";
 
@@ -82,19 +80,6 @@ public class PetController {
 	}
 
 	/**
-	 * CocoroboAPIのHttpHeaderを作成します.
-	 *
-	 * @return Headers
-	 */
-	private HttpHeaders createHttpHeaders() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", MediaType.APPLICATION_JSON.toString());
-		headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-
-		return headers;
-	}
-
-	/**
 	 * COCOROBOに発話させる.
 	 *
 	 * @param message COCOROBOに発話させるメッセージ
@@ -106,14 +91,14 @@ public class PetController {
 		requestSpeechDTO.setMessage(END_MESSAGE);
 
 		//HttpHeaderの作成
-		HttpHeaders headers = createHttpHeaders();
+		HttpHeaders headers = Constants.getJsonHttpHeaders();
 
 		//request用Entity作成
 		HttpEntity<RequestSpeechDTO> request = new HttpEntity(requestSpeechDTO, headers);
 
 		// CocoroboApiの発話APIを実行.
 		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.postForObject(SPEECH_URL, request, SpeechDTO.class);
+		return restTemplate.postForObject(Constants.SPEECH_URL, request, SpeechDTO.class);
 	}
 
 }
