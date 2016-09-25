@@ -5,10 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.java_women.cocorobopet.dto.RegisterImgDTO;
-
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -116,8 +113,6 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
 
         byte[] result = new byte[10240];
         HttpURLConnection connection = null;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        InputStream is = null;
 
         try {
             URL url = new URL(mURL);
@@ -134,8 +129,6 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
             OutputStream os = connection.getOutputStream();
             os.write(data);
             os.close();
-
-            RegisterImgDTO registerDto = new RegisterImgDTO();
 
            int response =  connection.getResponseCode();
 
@@ -155,9 +148,8 @@ public class HttpPostTask extends AsyncTask<Void, Void, byte[]>{
             e.printStackTrace();
         } finally {
             try {
-                is.close();
+
                 connection.disconnect();
-                baos.close();
             } catch (Exception e) {}
         }
 
