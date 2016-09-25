@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javajo.model.redis.RedisValue;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by maaya on 2016/09/25.
@@ -36,5 +37,8 @@ public class JacsonHelper {
         return mapper.readValue(json, RedisValue.class);
     }
 
-
+    public Map stringForMap(String json) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(json, Map.class);
+    }
 }

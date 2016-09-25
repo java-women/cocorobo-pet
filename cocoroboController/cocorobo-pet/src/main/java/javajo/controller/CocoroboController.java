@@ -2,6 +2,7 @@ package javajo.controller;
 
 import javajo.dto.*;
 import javajo.enums.StatusEnum;
+import javajo.hepler.JacsonHelper;
 import javajo.model.verify.Verify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +10,11 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * COCOROBOのデータ取得API.
@@ -79,7 +82,45 @@ public class CocoroboController {
     @PostMapping(value = "/speeches/{cocorobo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SpeechDTO> speech(@PathVariable String cocorobo, @RequestBody String message) {
         log.info("REST request speech : {}, message : {}", cocorobo, message);
-        return new ResponseEntity(sentMessageForCocorobo(message), HttpStatus.OK);
+        if (sendAuthForCocorobo()) {
+            return new ResponseEntity(sentMessageForCocorobo(message), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * COCOROBOの利用認証する.
+     *
+     * @return
+     */
+    private boolean sendAuthForCocorobo() {
+        boolean result = false;
+
+        // request bodyの作成
+        RequestAuthDTO requestAuthDTO = new RequestAuthDTO();
+        requestAuthDTO.setApikeyCocorobo(API_KEY);
+
+        //HttpHeaderの作成
+        HttpHeaders headers = createHttpHeaders();
+
+        //request用Entity作成
+        HttpEntity<RequestAuthDTO> request = new HttpEntity(requestAuthDTO, headers);
+
+        // CocoroboApiの利用認証APIを実行.
+        RestTemplate restTemplate = new RestTemplate();
+        String response = restTemplate.postForObject(AUTH_URL, request, String.class);
+        JacsonHelper jacsonHelper = new JacsonHelper();
+        try {
+            Map map = jacsonHelper.stringForMap(response);
+            if ((int) map.get("resultCode") == 0) {
+                result = true;
+            }
+        } catch (IOException e) {
+            log.error("IOException", e);
+        }
+
+        return result;
     }
 
     /**
