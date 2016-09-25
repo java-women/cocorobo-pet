@@ -1,55 +1,77 @@
 package javajo.logic;
 
-import javajo.dto.RegisterImgDTO;
+import javajo.dto.CompareImageDTO;
 import javajo.enums.StatusEnum;
-import javajo.hepler.ImageHelper;
-import javajo.model.detect.Detect;
-import javajo.model.request.RequestRedisValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.io.IOException;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by maaya on 2016/09/25.
  */
-public class RegisterImageLogic {
+@Component
+public class CompareImageLogic {
+
+    /**
+     * 同一人物判定閾値
+     */
+    private static final Double THRESHOLD = 0.4;
+
+    /**
+     * リクエストレスポンス
+     * @return
+     */
+    public ResponseEntity createApiResponse(StatusEnum status) {
+        CompareImageDTO results = new CompareImageDTO();
+        results.setResult(status.getName());
+
+        switch (status) {
+            case OK:
+                return new ResponseEntity<>(results, HttpStatus.OK);
+
+            case NG:
+                return new ResponseEntity<>(results, HttpStatus.OK);
+
+            default:
+                //すみません今のところ通る予定ないのでとりあえず・・・
+                return new ResponseEntity<>(results, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     /**
      * エラーレスポンス
      * @return
      */
     public ResponseEntity responseError() {
-        RegisterImgDTO results = new RegisterImgDTO();
+        CompareImageDTO results = new CompareImageDTO();
         results.setResult(StatusEnum.NG.getName());
         return new ResponseEntity<>(results, HttpStatus.BAD_REQUEST);
     }
 
     /**
-     * Redisデータ作成
-     * @param uploadFile
-     * @param faceInfo
+     * 類似度が閾値以上だったら同一人物として判定する
+     * @param confidence
      * @return
-     * @throws IOException
      */
-    public RequestRedisValue createRedisValue(String uploadFile, Detect[] faceInfo) throws IOException{
-        RequestRedisValue redisModel = new RequestRedisValue();
-        ImageHelper image = new ImageHelper(uploadFile);
-        redisModel.setDetects(faceInfo);
-        redisModel.setWidth(image.getWidth());
-        redisModel.setHeight(image.getWidth());
-
-        return redisModel;
+    private boolean isIdentical(Double confidence) {
+        if (confidence >= THRESHOLD) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
-     * OKレスポンス
-     * @param faceId
+     * 正常値返却
+     * @param confidence
      * @return
      */
-    public ResponseEntity createApiResponse(String faceId) {
-        RegisterImgDTO results = new RegisterImgDTO();
-        results.setResult(StatusEnum.OK.getName());
-        return new ResponseEntity<>(results, HttpStatus.OK);
+    public ResponseEntity jadgeIdentical(Double confidence) {
+        if(isIdentical(confidence)) {
+            return createApiResponse(StatusEnum.OK);
+
+        } else {
+            return createApiResponse(StatusEnum.NG);
+        }
     }
 }

@@ -4,7 +4,7 @@ import javajo.dto.RegisterImgDTO;
 import javajo.enums.StatusEnum;
 import javajo.hepler.ImageHelper;
 import javajo.model.detect.Detect;
-import javajo.model.request.RequestRedisValue;
+import javajo.model.redis.RedisValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,6 +19,7 @@ public class RegisterImageLogic {
 
     /**
      * エラーレスポンス
+     *
      * @return
      */
     public ResponseEntity responseError() {
@@ -34,8 +35,8 @@ public class RegisterImageLogic {
      * @return
      * @throws IOException
      */
-    public RequestRedisValue createRedisValue(String uploadFile, Detect[] faceInfo) throws IOException{
-        RequestRedisValue redisModel = new RequestRedisValue();
+    public RedisValue createRedisValue(String uploadFile, Detect[] faceInfo) throws IOException{
+        RedisValue redisModel = new RedisValue();
         ImageHelper image = new ImageHelper(uploadFile);
         redisModel.setDetects(faceInfo);
         redisModel.setWidth(image.getWidth());

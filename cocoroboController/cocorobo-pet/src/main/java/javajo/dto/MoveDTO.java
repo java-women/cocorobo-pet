@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class MoveDTO {
 
-	// 実行結果
-	public String result;
+    // 実行結果
+    public String result;
 
 }

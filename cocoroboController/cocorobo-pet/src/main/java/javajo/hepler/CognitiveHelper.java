@@ -1,5 +1,9 @@
 package javajo.hepler;
 
+import javajo.model.detect.Detect;
+import javajo.model.request.RequestDetect;
+import javajo.model.request.RequestVerify;
+import javajo.model.verify.Verify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -7,10 +11,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import javajo.model.detect.Detect;
-import javajo.model.request.RequestDetect;
-import javajo.model.verify.Verify;
-import javajo.model.request.RequestVerify;
 
 /**
  * Serviceクラスとしていますが、DB接続サービス層ではありません。
