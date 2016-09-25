@@ -1,16 +1,16 @@
-package javajo.service;
+package javajo.logic;
 
 import javajo.enums.MoveCommandEnum;
 import javajo.model.detect.Detect;
 import org.springframework.stereotype.Component;
 
 /**
- * COCOROBO用サービスクラス.
+ * COCOROBO用のロジッククラス.
  *
  * Created by Eriko on 2016/09/25.
  */
 @Component
-public class CocoroboService {
+public class CocoroboLogic {
 
 	/**
 	 * Cocoroboの移動方向を取得.

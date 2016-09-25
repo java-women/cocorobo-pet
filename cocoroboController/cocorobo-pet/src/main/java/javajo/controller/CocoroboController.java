@@ -4,7 +4,7 @@ import javajo.dto.FeelDTO;
 import javajo.dto.MoveDTO;
 import javajo.dto.SpeechDTO;
 import javajo.enums.StatusEnum;
-import javajo.service.CocoroboService;
+import javajo.logic.CocoroboLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class CocoroboController {
     private final Logger log = LoggerFactory.getLogger(CocoroboController.class);
 
 	@Autowired
-	private CocoroboService cocoroboService;
+	private CocoroboLogic cocoroboLogic;
 
     /**
      * 指定されたCOCOROBOの感情を取得する.
@@ -106,7 +106,7 @@ public class CocoroboController {
 
 		MoveDTO moveDTO = new MoveDTO();
 		moveDTO.setResult(StatusEnum.OK.getName());
-		moveDTO.setMoveCommand(cocoroboService.getMoveDirection());
+		moveDTO.setMoveCommand(cocoroboLogic.getMoveDirection());
 
 		return new ResponseEntity(moveDTO, HttpStatus.OK);
     }
