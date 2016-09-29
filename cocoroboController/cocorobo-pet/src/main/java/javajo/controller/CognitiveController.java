@@ -14,6 +14,7 @@ import javajo.model.verify.Verify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +39,8 @@ public class CognitiveController {
     @Autowired
     private CompareImageLogic compareImageLogic;
 
-    private static final String REDIS_KEY = "user";
+    @Value("${javajo.redis.key}")
+    private String REDIS_KEY;
 
     /**
      * Androidから画像を受け取り結果を返す.
