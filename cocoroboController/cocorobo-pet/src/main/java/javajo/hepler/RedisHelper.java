@@ -1,5 +1,6 @@
 package javajo.hepler;
 
+import org.springframework.beans.factory.annotation.Value;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisShardInfo;
 
@@ -10,9 +11,12 @@ import redis.clients.jedis.JedisShardInfo;
 public class RedisHelper {
     private static Jedis jedis;
 
-    private static final String HOST_NAME = "javajo-redis.redis.cache.windows.net";
-    private static final int PORT = 6379;
-    private static final String AUTH = "";
+    @Value("${javajo.redis.hostName}")
+    private String HOST_NAME;
+    @Value("${javajo.redis.port}")
+    private int PORT;
+    @Value("${javajo.redis.auth}")
+    private String AUTH;
 
 
     /**
