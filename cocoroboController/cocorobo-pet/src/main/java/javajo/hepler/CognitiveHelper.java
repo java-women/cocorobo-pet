@@ -6,6 +6,7 @@ import javajo.model.request.RequestVerify;
 import javajo.model.verify.Verify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,10 +23,14 @@ public class CognitiveHelper {
     private static final Logger logger = LoggerFactory.getLogger(CognitiveHelper.class);
 
     //Face API
-    private final String apiKey = "";
-    private final String verifyUrl = "https://api.projectoxford.ai/face/v1.0/verify";
-    private final String detectUrl = "https://api.projectoxford.ai/face/v1.0/detect";
-    private final String photoDomain = "http://javajo-api.azurewebsites.net/cocorobo-pet/";
+    @Value("${javajo.cognitive.apiKey}")
+    private String apiKey;
+    @Value("${javajo.cognitive.verifyUrl}")
+    private String verifyUrl;
+    @Value("${javajo.cognitive.detectUrl}")
+    private String detectUrl;
+    @Value("${javajo.cognitive.photoDomain}")
+    private String photoDomain;
 
     /**
      * DetectAPIの実行

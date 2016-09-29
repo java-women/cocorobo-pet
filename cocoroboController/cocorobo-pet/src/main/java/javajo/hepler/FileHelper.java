@@ -1,6 +1,7 @@
 package javajo.hepler;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -14,7 +15,8 @@ import java.util.UUID;
 public class FileHelper {
 
     private File uploadDirectory;
-    public static final String DIR_PATH = "webapps/cocorobo-pet/WEB-INF/classes/static/";
+    @Value("${javajo.file.dirPath}")
+    public static String DIR_PATH;
 
     /**
      * ファイルの保存
@@ -26,7 +28,6 @@ public class FileHelper {
         String name = UUID.randomUUID().toString() + ".jpg";
         File uploadFile = new File(uploadDirectory, DIR_PATH + name);
 
-        // (2)
         FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), uploadFile);
 
         return name;
