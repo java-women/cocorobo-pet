@@ -2,6 +2,7 @@ package javajo.logic;
 
 import javajo.dto.CompareImageDTO;
 import javajo.enums.StatusEnum;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,8 @@ public class CompareImageLogic {
     /**
      * 同一人物判定閾値
      */
-    private static final Double THRESHOLD = 0.4;
+    @Value("${javajo.cognitive.logic.threshold}")
+    private Double THRESHOLD;
 
     /**
      * リクエストレスポンス
