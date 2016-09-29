@@ -1,4 +1,15 @@
 javajo:
+    redis:
+        key: user
+        hostName: javajo-redis.redis.cache.windows.net
+        port: 6379
+        auth: yourAuthKey
     cognitive:
-        test: testStr
-
+        apiKey: yourApiKey
+        verifyUrl: https://api.projectoxford.ai/face/v1.0/verify
+        detectUrl: https://api.projectoxford.ai/face/v1.0/detect
+        photoDomain: http://javajo-api.azurewebsites.net/cocorobo-pet/
+        logic:
+            threshold: 0.4
+    file:
+        dirPath: webapps/cocorobo-pet/WEB-INF/classes/static/
