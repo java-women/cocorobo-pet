@@ -85,7 +85,9 @@ public class FeelActivity extends AppCompatActivity {
         FeelApiTask feelApiTask = new FeelApiTask() {
             @Override
             protected void onPostExecute(String result) {
-                Feel feel = result != null ? convertFeelFromJson(result) : new Feel(true, FeelApiEnum.NORMAL.getValue());
+                Feel feel = result != null
+                        ? new Gson().fromJson(result, Feel.class)
+                        : new Feel(true, FeelApiEnum.NORMAL.getValue());
 
                 if (feel.isResult()) {
                     setFeelImage(feel.getFeel());
@@ -100,7 +102,9 @@ public class FeelActivity extends AppCompatActivity {
         MoveApiTask moveApiTask = new MoveApiTask() {
             @Override
             protected void onPostExecute(String result) {
-                Move move = result != null ? convertMoveFromJson(result) : new Move(true, STOP);
+                Move move = result != null
+                        ? new Gson().fromJson(result, Move.class)
+                        : new Move(true, STOP);
 
                 if (move.isResult()) {
                     try {
@@ -113,14 +117,6 @@ public class FeelActivity extends AppCompatActivity {
             }
         };
         callMoveApi(moveApiTask);
-    }
-
-    private Feel convertFeelFromJson(String json) {
-        return new Gson().fromJson(json, Feel.class);
-    }
-
-    private Move convertMoveFromJson(String json) {
-        return new Gson().fromJson(json, Move.class);
     }
 
     public void setFeelImage(String feel) {
