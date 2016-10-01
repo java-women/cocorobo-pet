@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.java_women.cocorobopet.constants.FeelConst;
+import com.java_women.cocorobopet.constants.MoveConst;
 import com.java_women.cocorobopet.enums.FeelApiEnum;
 import com.java_women.cocorobopet.models.Feel;
 import com.java_women.cocorobopet.models.Move;
@@ -26,20 +28,6 @@ import jp.co.sharp.openapi.cocorobo.CocoroboApi;
  */
 public class FeelActivity extends AppCompatActivity {
 
-    private static final String FEEL_TAG = "FeelAPI";
-    private static final String MOVE_TAG = "MoveAPI";
-
-    private static final String STOP = "stop";
-
-    private static final String TOAST_TEXT = "端末の戻るボタンで前の画面に戻れます";
-
-    private static final int FEEL_START_MS = 0;
-    private static final int FEEL_INTERVAL_MS = 10000;
-    private static final int MOVE_START_MS = 2000;
-    private static final int MOVE_INTERVAL_MS = 5000;
-
-    private static final String API_KEY = "api key";
-
     private Handler feelHandler = new Handler();
     private Handler moveHandler = new Handler();
     private Timer feelTimer;
@@ -55,7 +43,7 @@ public class FeelActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         cocoroboApi = new CocoroboApi(getApplicationContext());
 
-        Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, FeelConst.TOAST_TEXT, Toast.LENGTH_LONG).show();
 
         callFeelApiTimer();
         callMoveApiTimer();
@@ -68,7 +56,7 @@ public class FeelActivity extends AppCompatActivity {
             public void run() {
                 feelHandler.post(() -> doFeelApiTask());
             }
-        }, FEEL_START_MS, FEEL_INTERVAL_MS);
+        }, FeelConst.FEEL_START_MS, FeelConst.FEEL_INTERVAL_MS);
     }
 
     private void callMoveApiTimer() {
@@ -78,7 +66,7 @@ public class FeelActivity extends AppCompatActivity {
             public void run() {
                 moveHandler.post(() -> doMoveApiTask());
             }
-        }, MOVE_START_MS, MOVE_INTERVAL_MS);
+        }, MoveConst.MOVE_START_MS, MoveConst.MOVE_INTERVAL_MS);
     }
 
     private void doFeelApiTask() {
@@ -91,7 +79,7 @@ public class FeelActivity extends AppCompatActivity {
 
                 if (feel.isResult()) {
                     setFeelImage(feel.getFeel());
-                    Log.d(FEEL_TAG, feel.toString());
+                    Log.d(FeelConst.FEEL_TAG, feel.toString());
                 }
             }
         };
@@ -104,16 +92,16 @@ public class FeelActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 Move move = result != null
                         ? new Gson().fromJson(result, Move.class)
-                        : new Move(true, STOP);
+                        : new Move(true, MoveConst.STOP);
 
                 if (move.isResult()) {
                     try {
-                        cocoroboApi.control(API_KEY, move.getMoveCommand());
+                        cocoroboApi.control(MoveConst.API_KEY, move.getMoveCommand());
                     } catch (RemoteException e) {
-                        Log.e(MOVE_TAG, "RemoteException!!!");
+                        Log.e(MoveConst.MOVE_TAG, "RemoteException!!!");
                     }
                 }
-                Log.d(MOVE_TAG, move.toString());
+                Log.d(MoveConst.MOVE_TAG, move.toString());
             }
         };
         callMoveApi(moveApiTask);
