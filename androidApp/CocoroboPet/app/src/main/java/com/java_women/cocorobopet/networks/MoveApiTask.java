@@ -1,4 +1,4 @@
-package com.java_women.cocorobopet.network;
+package com.java_women.cocorobopet.networks;
 
 import android.os.AsyncTask;
 import android.util.Log;

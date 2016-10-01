@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.java_women.cocorobopet.network.HttpPostListener;
-import com.java_women.cocorobopet.network.HttpPostTask;
+import com.java_women.cocorobopet.networks.HttpPostListener;
+import com.java_women.cocorobopet.networks.HttpPostTask;
 
 import java.io.ByteArrayOutputStream;
 

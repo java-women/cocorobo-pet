@@ -11,10 +11,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.java_women.cocorobopet.enums.FeelApiEnum;
-import com.java_women.cocorobopet.model.Feel;
-import com.java_women.cocorobopet.model.Move;
-import com.java_women.cocorobopet.network.FeelApiTask;
-import com.java_women.cocorobopet.network.MoveApiTask;
+import com.java_women.cocorobopet.models.Feel;
+import com.java_women.cocorobopet.models.Move;
+import com.java_women.cocorobopet.networks.FeelApiTask;
+import com.java_women.cocorobopet.networks.MoveApiTask;
 
 import java.util.Timer;
 import java.util.TimerTask;
