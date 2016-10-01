@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.java_women.cocorobopet.enums.FeelApiEnum;
 import com.java_women.cocorobopet.model.Feel;
 import com.java_women.cocorobopet.model.Move;
 import com.java_women.cocorobopet.network.FeelApiTask;
@@ -27,14 +28,6 @@ public class FeelActivity extends AppCompatActivity {
 
     private static final String FEEL_TAG = "FeelAPI";
     private static final String MOVE_TAG = "MoveAPI";
-
-    private static final String NORMAL = "normal";
-    private static final String WAAI = "waai";
-    private static final String MATTEE = "mattee";
-    private static final String SHOBOON = "shoboon";
-    private static final String KIRAAN = "kiraan";
-    private static final String SUKII = "sukii";
-    private static final String MUKII = "mukii";
 
     private static final String STOP = "stop";
 
@@ -92,7 +85,7 @@ public class FeelActivity extends AppCompatActivity {
         FeelApiTask feelApiTask = new FeelApiTask() {
             @Override
             protected void onPostExecute(String result) {
-                Feel feel = result != null ? convertFeelFromJson(result) : new Feel(true, NORMAL);
+                Feel feel = result != null ? convertFeelFromJson(result) : new Feel(true, FeelApiEnum.NORMAL.getValue());
 
                 if (feel.isResult()) {
                     setFeelImage(feel.getFeel());
@@ -116,7 +109,7 @@ public class FeelActivity extends AppCompatActivity {
                         Log.e(MOVE_TAG, "RemoteException!!!");
                     }
                 }
-                Log.e(MOVE_TAG, move.toString());
+                Log.d(MOVE_TAG, move.toString());
             }
         };
         callMoveApi(moveApiTask);
@@ -131,33 +124,11 @@ public class FeelActivity extends AppCompatActivity {
     }
 
     public void setFeelImage(String feel) {
-        int imageName = R.drawable.normal;
-
-        switch (feel) {
-            case NORMAL:
-                imageName = R.drawable.normal;
-                break;
-            case WAAI:
-                imageName = R.drawable.waai;
-                break;
-            case MATTEE:
-                imageName = R.drawable.mattee;
-                break;
-            case SHOBOON:
-                imageName = R.drawable.shoboon;
-                break;
-            case KIRAAN:
-                imageName = R.drawable.kiraan;
-                break;
-            case SUKII:
-                imageName = R.drawable.sukii;
-                break;
-            case MUKII:
-                imageName = R.drawable.mukii;
-                break;
+        int imageName = FeelApiEnum.getImageFromValue(feel);
+        if (imageName == 0) {
+            imageName = FeelApiEnum.NORMAL.getImage();
         }
-
-        ImageView imageView = (ImageView)findViewById(R.id.feel_image);
+        ImageView imageView = (ImageView) findViewById(R.id.feel_image);
         if (imageView != null) {
             imageView.setImageResource(imageName);
         }
