@@ -4,4 +4,6 @@
     <string name="feel">めだま</string>
 
     <string name="send_success">送信しました</string>
+
+    <string name="toast_text">端末の戻るボタンで前の画面に戻れます</string>
 </resources>
