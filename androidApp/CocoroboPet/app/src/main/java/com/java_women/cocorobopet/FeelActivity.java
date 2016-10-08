@@ -34,6 +34,7 @@ public class FeelActivity extends AppCompatActivity {
     private Timer moveTimer;
 
     CocoroboApi cocoroboApi;
+    public static final String API_KEY = "api key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class FeelActivity extends AppCompatActivity {
 
                 if (move.isResult()) {
                     try {
-                        cocoroboApi.control(MoveConst.API_KEY, move.getMoveCommand());
+                        cocoroboApi.control(API_KEY, move.getMoveCommand());
                     } catch (RemoteException e) {
                         Log.e(MoveConst.MOVE_TAG, "RemoteException!!!");
                     }

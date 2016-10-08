@@ -13,6 +13,4 @@ public class MoveConst {
     public static final int MOVE_START_MS = 2000;
     public static final int MOVE_INTERVAL_MS = 5000;
 
-    public static final String API_KEY = "api key";
-
 }
