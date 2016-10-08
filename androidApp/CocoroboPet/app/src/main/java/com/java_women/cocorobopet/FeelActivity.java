@@ -109,9 +109,6 @@ public class FeelActivity extends AppCompatActivity {
 
     public void setFeelImage(String feel) {
         int imageName = FeelApiEnum.getImageFromValue(feel);
-        if (imageName == 0) {
-            imageName = FeelApiEnum.NORMAL.getImage();
-        }
         ImageView imageView = (ImageView) findViewById(R.id.feel_image);
         if (imageView != null) {
             imageView.setImageResource(imageName);

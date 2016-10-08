@@ -38,6 +38,6 @@ public enum FeelApiEnum {
                 return feelApiEnum.getImage();
             }
         }
-        return 0;
+        return NORMAL.getImage();
     }
 }
