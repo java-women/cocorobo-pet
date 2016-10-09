@@ -22,8 +22,10 @@ import java.io.IOException;
 @Component
 public class WebcamScheduledTasks {
 
+	//webカメラのログ情報取得
 	private final Logger log = LoggerFactory.getLogger(WebcamScheduledTasks.class);
 
+	//パスの指定
 	private final File filePath = new File(System.getProperty("java.io.tmpdir") + "/cocorobo");
 
 	/**
@@ -113,10 +115,13 @@ public class WebcamScheduledTasks {
 	 * @param file 削除対象ファイル
 	 */
 	private void deleteFile(File file) {
+		//ファイルが存在null場合
 		if (file != null && file.exists()) {
+				//ファイルを削除する
 			if (file.delete()) {
 				log.debug("Success to delete file. file : {}", file);
 			} else {
+				//警告の表示
 				log.warn("Failed to delete file. file : {}", file);
 			}
 		}

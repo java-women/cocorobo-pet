@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+
+/**
+ * springの実行
+ */
 @SpringBootApplication
 @EnableScheduling
 public class Application {
