@@ -6,4 +6,6 @@
     <string name="send_success">送信しました</string>
 
     <string name="toast_text">端末の戻るボタンで前の画面に戻れます</string>
+
+    <string name="menu_settings">せってい</string>
 </resources>
