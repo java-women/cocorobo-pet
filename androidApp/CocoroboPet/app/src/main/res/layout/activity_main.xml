@@ -23,7 +23,7 @@
         android:width="150dp"
         android:height="55dp"
         android:textStyle="bold"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:width="150dp"
         android:height="55dp"
         android:textStyle="bold"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
     <LinearLayout
         android:orientation="horizontal"

@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         if (feelButton != null) {
             feelButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, FeelActivity.class)));
         }
-
     }
 
     @Override

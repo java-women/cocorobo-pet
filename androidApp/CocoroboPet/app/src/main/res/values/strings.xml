@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">CocoroboPet</string>
+
     <string name="photo">さつえい</string>
     <string name="feel">めだま</string>
-
-    <string name="send_success">送信しました</string>
-
-    <string name="toast_text">端末の戻るボタンで前の画面に戻れます</string>
+    <string name="submit">さぶみっと</string>
 
     <string name="menu_settings">せってい</string>
+
+    <string name="send_success">送信しました</string>
+    <string name="return_toast_text">端末の戻るボタンで前の画面に戻れます</string>
+    <string name="submit_toast_text">登録しました！</string>
+
+    <string name="api_key">API Key</string>
 </resources>

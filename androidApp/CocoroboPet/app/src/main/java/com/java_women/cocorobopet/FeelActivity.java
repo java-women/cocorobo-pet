@@ -44,7 +44,7 @@ public class FeelActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         cocoroboApi = new CocoroboApi(getApplicationContext());
 
-        Toast.makeText(this, R.string.toast_text, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.return_toast_text, Toast.LENGTH_LONG).show();
 
         callFeelApiTimer();
         callMoveApiTimer();
