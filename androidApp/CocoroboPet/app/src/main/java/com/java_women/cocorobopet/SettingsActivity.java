@@ -7,14 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.java_women.cocorobopet.constants.FeelConst;
+
 /**
  * 設定画面.
  * Created by aya on 2016/11/04.
  */
 
 public class SettingsActivity extends AppCompatActivity {
-
-    private static final String API_PREF_KEY = "apiKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setApiKey() {
-        String apiKey = getSharedPreferences(API_PREF_KEY, Context.MODE_PRIVATE).getString(API_PREF_KEY, "");
+        String apiKey = getSharedPreferences(FeelConst.API_PREF_KEY, Context.MODE_PRIVATE)
+                .getString(FeelConst.API_PREF_KEY, "");
         EditText editText = (EditText) findViewById(R.id.api_key);
         if (editText != null) {
             editText.setText(apiKey);
@@ -41,9 +42,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void saveApiKey() {
-        getSharedPreferences(API_PREF_KEY, Context.MODE_PRIVATE)
+        getSharedPreferences(FeelConst.API_PREF_KEY, Context.MODE_PRIVATE)
                 .edit()
-                .putString(API_PREF_KEY, getApiKeyText())
+                .putString(FeelConst.API_PREF_KEY, getApiKeyText())
                 .apply();
 
         Toast.makeText(this, R.string.submit_toast_text, Toast.LENGTH_LONG).show();

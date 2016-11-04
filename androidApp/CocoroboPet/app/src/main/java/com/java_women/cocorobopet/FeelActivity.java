@@ -1,5 +1,6 @@
 package com.java_women.cocorobopet;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -34,7 +35,6 @@ public class FeelActivity extends AppCompatActivity {
     private Timer moveTimer;
 
     CocoroboApi cocoroboApi;
-    public static final String API_KEY = "api key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class FeelActivity extends AppCompatActivity {
 
                 if (move.isResult()) {
                     try {
-                        cocoroboApi.control(API_KEY, move.getMoveCommand());
+                        cocoroboApi.control(getApiKey(), move.getMoveCommand());
                     } catch (RemoteException e) {
                         Log.e(MoveConst.MOVE_TAG, "RemoteException!!!");
                     }
@@ -106,6 +106,11 @@ public class FeelActivity extends AppCompatActivity {
             }
         };
         callMoveApi(moveApiTask);
+    }
+
+    private String getApiKey() {
+        return getSharedPreferences(FeelConst.API_PREF_KEY, Context.MODE_PRIVATE)
+                .getString(FeelConst.API_PREF_KEY, "");
     }
 
     public void setFeelImage(String feel) {

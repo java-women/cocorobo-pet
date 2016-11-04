@@ -11,6 +11,8 @@ public final class FeelConst {
     public static final int FEEL_START_MS = 0;
     public static final int FEEL_INTERVAL_MS = 10000;
 
+    public static final String API_PREF_KEY = "apiKey";
+
     private FeelConst() {
     }
 
