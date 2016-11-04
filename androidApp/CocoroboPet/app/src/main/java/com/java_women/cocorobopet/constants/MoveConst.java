@@ -4,7 +4,7 @@ package com.java_women.cocorobopet.constants;
  * Move APIの処理で使用する定数.
  * Created by aya on 2016/10/01.
  */
-public class MoveConst {
+public final class MoveConst {
 
     public static final String MOVE_TAG = "MoveAPI";
 
