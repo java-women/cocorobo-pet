@@ -2,6 +2,10 @@ package com.java_women.cocorobopet.constants;
 
 /**
  * Move APIの処理で使用する定数.
+ *
+ * Androidでstaticとかアレだけど…
+ * 今回は落ちても別に害はないと思うので可読性をとってstaticで指定します。
+ *
  * Created by aya on 2016/10/01.
  */
 public final class MoveConst {
