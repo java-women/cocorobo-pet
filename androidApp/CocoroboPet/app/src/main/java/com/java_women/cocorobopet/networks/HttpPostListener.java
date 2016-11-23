@@ -1,4 +1,4 @@
-package com.java_women.cocorobopet.network;
+package com.java_women.cocorobopet.networks;
 
 /**
  * Http送信クラスからの結果をActivityに通知するためのリスナー

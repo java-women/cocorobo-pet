@@ -6,15 +6,17 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.java_women.cocorobopet.network.HttpPostListener;
-import com.java_women.cocorobopet.network.HttpPostTask;
+import com.java_women.cocorobopet.networks.HttpPostListener;
+import com.java_women.cocorobopet.networks.HttpPostTask;
 
 import java.io.ByteArrayOutputStream;
 
@@ -34,6 +36,8 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
+
+        setReturnButton();
 
         //画像表示・保持用のImageView
         imageView = (ImageView) findViewById(R.id.image_view);
@@ -96,6 +100,13 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
         }
     }
 
+    private void setReturnButton() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //カメラを起動しコールバックされたとき
@@ -126,4 +137,15 @@ public class PhotoActivity extends AppCompatActivity implements HttpPostListener
         Log.i(TAG, "post failure!");
         Toast.makeText(context, "送信に失敗しました", Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(PhotoActivity.this, MainActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

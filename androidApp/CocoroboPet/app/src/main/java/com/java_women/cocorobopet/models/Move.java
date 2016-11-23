@@ -1,4 +1,4 @@
-package com.java_women.cocorobopet.model;
+package com.java_women.cocorobopet.models;
 
 /**
  * Move.

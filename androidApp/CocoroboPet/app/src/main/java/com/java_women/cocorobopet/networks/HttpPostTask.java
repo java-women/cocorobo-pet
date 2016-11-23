@@ -1,4 +1,4 @@
-package com.java_women.cocorobopet.network;
+package com.java_women.cocorobopet.networks;
 
 import android.app.ProgressDialog;
 import android.content.Context;

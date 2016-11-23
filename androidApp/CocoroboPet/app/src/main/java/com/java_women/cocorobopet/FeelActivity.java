@@ -1,5 +1,6 @@
 package com.java_women.cocorobopet;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -10,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.java_women.cocorobopet.model.Feel;
-import com.java_women.cocorobopet.model.Move;
-import com.java_women.cocorobopet.network.FeelApiTask;
-import com.java_women.cocorobopet.network.MoveApiTask;
+import com.java_women.cocorobopet.constants.FeelConst;
+import com.java_women.cocorobopet.constants.MoveConst;
+import com.java_women.cocorobopet.enums.FeelApiEnum;
+import com.java_women.cocorobopet.models.Feel;
+import com.java_women.cocorobopet.models.Move;
+import com.java_women.cocorobopet.networks.FeelApiTask;
+import com.java_women.cocorobopet.networks.MoveApiTask;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,28 +28,6 @@ import jp.co.sharp.openapi.cocorobo.CocoroboApi;
  * 目玉表示画面.
  */
 public class FeelActivity extends AppCompatActivity {
-
-    private static final String FEEL_TAG = "FeelAPI";
-    private static final String MOVE_TAG = "MoveAPI";
-
-    private static final String NORMAL = "normal";
-    private static final String WAAI = "waai";
-    private static final String MATTEE = "mattee";
-    private static final String SHOBOON = "shoboon";
-    private static final String KIRAAN = "kiraan";
-    private static final String SUKII = "sukii";
-    private static final String MUKII = "mukii";
-
-    private static final String STOP = "stop";
-
-    private static final String TOAST_TEXT = "端末の戻るボタンで前の画面に戻れます";
-
-    private static final int FEEL_START_MS = 0;
-    private static final int FEEL_INTERVAL_MS = 10000;
-    private static final int MOVE_START_MS = 2000;
-    private static final int MOVE_INTERVAL_MS = 5000;
-
-    private static final String API_KEY = "api key";
 
     private Handler feelHandler = new Handler();
     private Handler moveHandler = new Handler();
@@ -62,7 +44,7 @@ public class FeelActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         cocoroboApi = new CocoroboApi(getApplicationContext());
 
-        Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.return_toast_text, Toast.LENGTH_LONG).show();
 
         callFeelApiTimer();
         callMoveApiTimer();
@@ -75,7 +57,7 @@ public class FeelActivity extends AppCompatActivity {
             public void run() {
                 feelHandler.post(() -> doFeelApiTask());
             }
-        }, FEEL_START_MS, FEEL_INTERVAL_MS);
+        }, FeelConst.FEEL_START_MS, FeelConst.FEEL_INTERVAL_MS);
     }
 
     private void callMoveApiTimer() {
@@ -85,18 +67,20 @@ public class FeelActivity extends AppCompatActivity {
             public void run() {
                 moveHandler.post(() -> doMoveApiTask());
             }
-        }, MOVE_START_MS, MOVE_INTERVAL_MS);
+        }, MoveConst.MOVE_START_MS, MoveConst.MOVE_INTERVAL_MS);
     }
 
     private void doFeelApiTask() {
         FeelApiTask feelApiTask = new FeelApiTask() {
             @Override
             protected void onPostExecute(String result) {
-                Feel feel = result != null ? convertFeelFromJson(result) : new Feel(true, NORMAL);
+                Feel feel = result != null
+                        ? new Gson().fromJson(result, Feel.class)
+                        : new Feel(true, FeelApiEnum.NORMAL.getValue());
 
                 if (feel.isResult()) {
                     setFeelImage(feel.getFeel());
-                    Log.d(FEEL_TAG, feel.toString());
+                    Log.d(FeelConst.FEEL_TAG, feel.toString());
                 }
             }
         };
@@ -107,57 +91,31 @@ public class FeelActivity extends AppCompatActivity {
         MoveApiTask moveApiTask = new MoveApiTask() {
             @Override
             protected void onPostExecute(String result) {
-                Move move = result != null ? convertMoveFromJson(result) : new Move(true, STOP);
+                Move move = result != null
+                        ? new Gson().fromJson(result, Move.class)
+                        : new Move(true, MoveConst.STOP);
 
                 if (move.isResult()) {
                     try {
-                        cocoroboApi.control(API_KEY, move.getMoveCommand());
+                        cocoroboApi.control(getApiKey(), move.getMoveCommand());
                     } catch (RemoteException e) {
-                        Log.e(MOVE_TAG, "RemoteException!!!");
+                        Log.e(MoveConst.MOVE_TAG, "RemoteException!!!");
                     }
                 }
-                Log.e(MOVE_TAG, move.toString());
+                Log.d(MoveConst.MOVE_TAG, move.toString());
             }
         };
         callMoveApi(moveApiTask);
     }
 
-    private Feel convertFeelFromJson(String json) {
-        return new Gson().fromJson(json, Feel.class);
-    }
-
-    private Move convertMoveFromJson(String json) {
-        return new Gson().fromJson(json, Move.class);
+    private String getApiKey() {
+        return getSharedPreferences(FeelConst.API_PREF_KEY, Context.MODE_PRIVATE)
+                .getString(FeelConst.API_PREF_KEY, "");
     }
 
     public void setFeelImage(String feel) {
-        int imageName = R.drawable.normal;
-
-        switch (feel) {
-            case NORMAL:
-                imageName = R.drawable.normal;
-                break;
-            case WAAI:
-                imageName = R.drawable.waai;
-                break;
-            case MATTEE:
-                imageName = R.drawable.mattee;
-                break;
-            case SHOBOON:
-                imageName = R.drawable.shoboon;
-                break;
-            case KIRAAN:
-                imageName = R.drawable.kiraan;
-                break;
-            case SUKII:
-                imageName = R.drawable.sukii;
-                break;
-            case MUKII:
-                imageName = R.drawable.mukii;
-                break;
-        }
-
-        ImageView imageView = (ImageView)findViewById(R.id.feel_image);
+        int imageName = FeelApiEnum.getImageFromValue(feel);
+        ImageView imageView = (ImageView) findViewById(R.id.feel_image);
         if (imageView != null) {
             imageView.setImageResource(imageName);
         }
