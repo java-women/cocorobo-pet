@@ -11,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.java_women.cocorobopet.enums.Feel.FeelEnum;
-import com.java_women.cocorobopet.enums.Feel.FeelTimeEnum;
+import com.java_women.cocorobopet.constants.FeelConst;
+import com.java_women.cocorobopet.constants.MoveConst;
 import com.java_women.cocorobopet.enums.FeelApiEnum;
-import com.java_women.cocorobopet.enums.Move.MoveEnum;
-import com.java_women.cocorobopet.enums.Move.MoveTimeEnum;
 import com.java_women.cocorobopet.models.Feel;
 import com.java_women.cocorobopet.models.Move;
 import com.java_women.cocorobopet.networks.FeelApiTask;
@@ -59,7 +57,7 @@ public class FeelActivity extends AppCompatActivity {
             public void run() {
                 feelHandler.post(() -> doFeelApiTask());
             }
-        }, FeelTimeEnum.START_MS.getTime(), FeelTimeEnum.INTERVAL_MS.getTime());
+        }, FeelConst.FEEL_START_MS, FeelConst.FEEL_INTERVAL_MS);
     }
 
     private void callMoveApiTimer() {
@@ -69,7 +67,7 @@ public class FeelActivity extends AppCompatActivity {
             public void run() {
                 moveHandler.post(() -> doMoveApiTask());
             }
-        }, MoveTimeEnum.START_MS.getTime(), MoveTimeEnum.INTERVAL_MS.getTime());
+        }, MoveConst.MOVE_START_MS, MoveConst.MOVE_INTERVAL_MS);
     }
 
     private void doFeelApiTask() {
@@ -82,7 +80,7 @@ public class FeelActivity extends AppCompatActivity {
 
                 if (feel.isResult()) {
                     setFeelImage(feel.getFeel());
-                    Log.d(FeelEnum.TAG.getValue(), feel.toString());
+                    Log.d(FeelConst.FEEL_TAG, feel.toString());
                 }
             }
         };
@@ -95,24 +93,24 @@ public class FeelActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 Move move = result != null
                         ? new Gson().fromJson(result, Move.class)
-                        : new Move(true, MoveEnum.STOP.getValue());
+                        : new Move(true, MoveConst.STOP);
 
                 if (move.isResult()) {
                     try {
                         cocoroboApi.control(getApiKey(), move.getMoveCommand());
                     } catch (RemoteException e) {
-                        Log.e(MoveEnum.TAG.getValue(), "RemoteException!!!");
+                        Log.e(MoveConst.MOVE_TAG, "RemoteException!!!");
                     }
                 }
-                Log.d(MoveEnum.TAG.getValue(), move.toString());
+                Log.d(MoveConst.MOVE_TAG, move.toString());
             }
         };
         callMoveApi(moveApiTask);
     }
 
     private String getApiKey() {
-        return getSharedPreferences(FeelEnum.API_PREF_KEY.getValue(), Context.MODE_PRIVATE)
-                .getString(FeelEnum.API_PREF_KEY.getValue(), "");
+        return getSharedPreferences(FeelConst.API_PREF_KEY, Context.MODE_PRIVATE)
+                .getString(FeelConst.API_PREF_KEY, "");
     }
 
     public void setFeelImage(String feel) {
