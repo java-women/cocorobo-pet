@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.java_women.cocorobopet.constants.FeelConst;
 import com.java_women.cocorobopet.constants.MoveConst;
 import com.java_women.cocorobopet.enums.FeelApiEnum;
+import com.java_women.cocorobopet.enums.MoveApiEnum;
 import com.java_women.cocorobopet.models.Feel;
 import com.java_women.cocorobopet.models.Move;
 import com.java_women.cocorobopet.networks.FeelApiTask;
@@ -93,7 +94,7 @@ public class FeelActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 Move move = result != null
                         ? new Gson().fromJson(result, Move.class)
-                        : new Move(true, MoveConst.STOP);
+                        : new Move(true, MoveApiEnum.FORWARD.getValue());
 
                 if (move.isResult()) {
                     try {
